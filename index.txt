@@ -1,24 +1,21 @@
-vCard - Personal Portfolio
+Krishna Viradiya
 
 # sidebar
 
-alt = Richard hanrick
-Richard hanrick
-Web developer
+alt = Krishna Viradiya
+Krishna Viradiya
+AI/ML Developer
 
 Show Contacts
 
 Email
-richard@example.com
+krishnaviradiya1108@gmail.com
 
 Phone
-+1 (213) 352-2795
-
-Birthday
-June 23, 1982
++91 98256 72500
 
 Location
-Sacramento, California, USA
+Vadodara, Gujarat
 
 # navbar
 
@@ -32,10 +29,7 @@ Contact
 
 About me
 
-I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.
-
-My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way. I created web design for many famous brand companies.
-
+Motivated Computer Science and Engineering pre-final year student from GSFC University (specializing in Data Science, Artificial Intelligence, and Machine Learning). Passionate about AI/ML, Natural Language Processing, and Soft Computing with an interest in solving real-world problems. Possess hands-on experience with Graphic Design tools like Figma and Canva, along with foundational knowledge of Unity Software (3D Design and Scripting). Excited to contribute to projects, explore research opportunities, and continuously expand my technical knowledge and skills.
 
 ## service
 
@@ -58,27 +52,6 @@ Photography
 I make high-quality photos of any category at a professional level.
 
 
-## testimonials
-
-Testimonials
-
-alt = Daniel lewis
-Daniel lewis
-Richard was hired to create a corporate identity. We were very pleased with the work done. She has a lot of experience and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt consectetur adipiscing elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-
-alt = Jessica miller
-Jessica miller
-Richard was hired to create a corporate identity. We were very pleased with the work done. She has a lot of experience and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt consectetur adipiscing elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-
-alt = Emily evans
-Emily evans
-Richard was hired to create a corporate identity. We were very pleased with the work done. She has a lot of experience and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt consectetur adipiscing elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-
-alt = Henry william
-Henry william
-Richard was hired to create a corporate identity. We were very pleased with the work done. She has a lot of experience and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt consectetur adipiscing elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-
-
 ## clients
 
 Clients
@@ -93,11 +66,11 @@ Resume
 
 Education
 
-University school of the arts
-2007 — 2008
-Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et quas molestias exceptur.
+B.Tech - Computer Science and Engineering (specialization in Data Science, Machine Learning and Artificial Intelligence) GSFC University
+2022 — 2026
+Achieve Cumulative Grade point of 7.68 till 
 
-New york academy of art
+New york academy of art 
 2006 — 2007
 Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est omnis..
 
