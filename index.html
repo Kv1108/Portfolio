@@ -1,271 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Krishna Viradiya - AI/ML Engineer & Developer</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-  <nav>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#achievements">Achievements</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Portfolio - Krishna Viradiya</title>
 
-  <main id="about">
-    <div class="hero-section">
-      <div class="hero-text">
-        <h1>Krishna Viradiya</h1>
-        <h2>AI/ML Engineer & Developer</h2>
-        <p>Specializing in Data Science, Artificial Intelligence, and Machine Learning</p>
-        <div class="social-links">
-          <a href="https://www.linkedin.com/in/krishna-viradiya-0b1470256/" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="https://github.com/Kv1108" target="_blank"><i class="fab fa-github"></i></a>
-          <a href="mailto:22bt04056@gsfcuniversity.ac.in"><i class="fas fa-envelope"></i></a>
-          <a href="tel:+919825672500"><i class="fas fa-phone"></i></a>
+    <!-- bootstrap css cdn link  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+
+    <!-- custom css file -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- bootstrap icon cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
+    />
+
+    <!-- for adding animation to website we have use AOS library 
+    AOS Library css file cdn link -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- jquery cdn link  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <!-- navbar starts -->
+    <nav
+      id="navbar-top"
+      class="navbar navbar-expand-lg navbar-light bg-white sticky-top"
+    >
+      <div class="container-fluid px-5">
+        <a class="navbar-brand fw-bold fs-2" href="#" style="color: #3f396d"
+          >Portfolio</a
+        >
+        <button
+          class="nav-menu d-md-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <i class="bi bi-menu-button-fill"></i>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-center"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav gap-4" style="font-size: 1.1rem">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#service">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#experience">Experience</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <button class="c-btn ms-4 py-2 px-4 rounded-pill d-none d-md-block">Contact</button>
+      </div>
+    </nav>
+    <!-- navbar ends here -->
+
+    <!-- home section starts  -->
+    <section class="home pt-5 pb-5" id="home">
+      <div class="row justify-content-evenly align-middle">
+        <!-- here data-aos is used for adding aos animation  -->
+        <div class="col-10 col-md-6 text-center text-md-start" data-aos="slide-right">
+          <h2 style="color: #3f396d">
+            Hello! I Am <br /><span class="c-orange">KRISHNA VIRADIYA</span>
+          </h2>
+          <p class="text-muted">
+            I'm a final-year Computer Science student specializing in AI, ML, and Data Science. 
+            I have hands-on experience in developing and implementing various AI/ML models through 
+            internships and projects. I'm passionate about exploring innovative technologies and 
+            collaborating on cutting-edge projects.
+          </p>
+          <button class="c-btn h-btn mt-3 py-3 px-5 rounded-pill">
+            Hire Me
+          </button>
+          <a href="#portfolio" class="link ms-4 d-inline-block mt-3">See My Work</a>
+        </div>
+        <div class="col-10 col-md-4 d-none d-md-block">
+          <img src="images\logo.png" class="img-fluid" alt="Krishna Viradiya" />
         </div>
       </div>
-    </div>
+    </section>
+    <!-- home section ends here -->
+
+    <!-- expertise section starts -->
+    <section class="expertise mt-5" id="service">
+      <div class="heading text-center">
+        <small>My Expertise</small>
+        <h3>
+          Specialized in <br />
+          AI & Machine Learning
+        </h3>
+      </div>
+      <div class="row justify-content-evenly mt-5">
+        <div class="col-10 col-md-4" data-aos="fade-up">
+          <div class="service-card">
+            <div class="img">
+              <img
+                src="images/service-icon1.png"
+                class="w-25 img-fluid img"
+                alt=""
+              />
+            </div>
+            <div class="content mt-3">
+              <h4>Machine Learning</h4>
+              <p class="text-muted">
+                Expertise in developing and implementing ML models for various applications 
+                including NLP, computer vision, and predictive analytics.
+              </p>
+              <a href="#portfolio" class="link">View Projects</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-10" data-aos="fade-up">
+          <div class="service-card">
+            <div class="img">
+              <img
+                src="images/service-icon2.png"
+                class="w-25 img-fluid img"
+                alt=""
+              />
+            </div>
+            <div class="content mt-3">
+              <h4>AI Development</h4>
+              <p class="text-muted">
+                Experience in building AI solutions with technologies like PyTorch, 
+                TensorFlow, and various NLP frameworks for real-world applications.
+              </p>
+              <a href="#portfolio" class="link">View Projects</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-10" data-aos="fade-up">
+          <div class="service-card">
+            <div class="img">
+              <img
+                src="images/service-icon3.png"
+                class="w-25 img-fluid img"
+                alt=""
+              />
+            </div>
+            <div class="content mt-3">
+              <h4>Full Stack Development</h4>
+              <p class="text-muted">
+                Proficient in developing end-to-end applications using Python, 
+                Django, Flask, and frontend technologies to deploy AI solutions.
+              </p>
+              <a href="#portfolio" class="link">View Projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- expertise section ends here -->
+
+    <!-- skill section starts -->
+    <section class="skill mt-5 py-5" id="about">
+      <div class="row justify-content-evenly">
+        <div class="col-10 col-md-5 skill-with-progress" data-aos="slide-right">
+          <div class="row justify-content-evenly">
+            <div class="col-10 col-md-6">
+              <div class="progress-card ms-3 ms-md-0">
+                <div class="circular-progress python">
+                  <span class="progress-value python-progress">50%</span>
+                </div>
+                <br />
+                <span class="text">Python & AI/ML</span>
+              </div>
+            </div>
+            <div class="col-10 col-md-6 mt-4 mt-md-0">
+              <div class="progress-card ms-3 ms-md-0">
+                <div class="circular-progress java">
+                  <span class="progress-value java-progress">0%</span>
+                </div>
+                <br />
+                <span class="text">Java & C++</span>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-evenly mt-4">
+            <div class="col-10 col-md-6">
+              <div class="progress-card ms-3 ms-md-0">
+                <div class="circular-progress webdev">
+                  <span class="progress-value webdev-progress">0%</span>
+                </div>
+                <br />
+                <span class="text">Web Development</span>
+              </div>
+            </div>
+            <div class="col-10 col-md-6 mt-4 mt-md-0">
+              <div class="progress-card ms-3  ms-md-0">
+                <div class="circular-progress database">
+                  <span class="progress-value database-progress">0%</span>
+                </div>
+                <br>
+                <span class="text">Database Management</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-10 col-md-5 skill-detail" data-aos="slide-left">
+          <div class="heading mt-5 mt-md-3">
+            <small>My Skills</small>
+            <h3>Technical Expertise in AI & Data Science</h3>
+            <p class="text-muted">
+              I specialize in Artificial Intelligence, Machine Learning, and Data Science with 
+              hands-on experience in developing and implementing various models through academic 
+              projects and internships.
+            </p>
+            <p class="text-muted">
+              My technical skills include Python, Java, C++, and various AI/ML frameworks like 
+              PyTorch, TensorFlow, and scikit-learn. I'm also proficient in web development 
+              technologies and database management systems.
+            </p>
+            <button class="c-btn h-btn mt-3 py-3 px-5 rounded-pill">
+              <!-- here download attribute is used for adding download functionality to button  -->
+              <a
+                href="images\CV - Krishna Viradiya.pdf (1).pdf"
+                download="KrishnaViradiya_CV"
+                style="text-decoration: none;color: #fff;"
+                >Download Resume</a
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- skill section end here -->
+
+    <!-- portfolio section starts here -->
+    <section class="portfolio" id="portfolio">
+      <div class="heading text-center pt-5">
+        <small>My Projects</small>
+        <h3>AI & ML Portfolio</h3>
+      </div>
+
+      <div id="myBtnContainer" class="text-center mt-4">
+        <!-- here we will create custom attribute using data- for filtering -->
+        <button class="filter-item" data-filter="all">All</button>
+        <button class="filter-item" data-filter="ai">AI/ML</button>
+        <button class="filter-item" data-filter="nlp">NLP</button>
+        <button class="filter-item" data-filter="iot">IoT</button>
+      </div>
+      <div class="portfolio-body">
+        <div class="row justify-content-evenly px-4">
+          <div class="post col-md-4 ai nlp all col-10 mt-3 mt-md-0" data-aos="fade-up">
+            <div class="card">
+              <img src="images/voicediarizer.png" class="card-img-top" alt="Voice Diarizer Project" />
+              <div class="card-body text-center">
+                <h4 class="card-title">Voice Diarizer</h4>
+                <span class="badge bg-secondary badge-pill">Python</span>
+                <span class="badge bg-secondary badge-pill">PyTorch</span>
+                <span class="badge bg-secondary badge-pill">Flask</span><br />
+                <span class="badge bg-secondary badge-pill mb-2">NLP</span><br />
+                <p class="mt-2">Real-time voice diarization system with speaker separation and transcription</p>
+                <a href="https://github.com/krishna-viradiya/VoiceDiarizer" class="link">View Project</a>
+              </div>
+            </div>
+          </div>
+          <div class="post col-md-4 nlp ai all col-10 mt-3 mt-md-0" data-aos="fade-up">
+            <div class="card">
+              <img
+                src="images/word-sense-disambiguation.png"
+                class="card-img-top"
+                alt="Cross-Lingual WSD Project"
+              />
+              <div class="card-body text-center">
+                <h4 class="card-title">Cross-Lingual WSD</h4>
+                <span class="badge bg-secondary badge-pill">Python</span>
+                <span class="badge bg-secondary badge-pill">BERT</span>
+                <span class="badge bg-secondary badge-pill">NLTK</span>
+                <span class="badge bg-secondary badge-pill mb-2">NLP</span><br />
+                <p class="mt-2">Word sense disambiguation system for English text with Hindi translations</p>
+                <a href="#" class="link">View Project</a>
+              </div>
+            </div>
+          </div>
+          <div class="post col-md-4 ai all col-10 mt-3 mt-md-0" data-aos="fade-up">
+            <div class="card">
+              <img src="images/spam-detection.png" class="card-img-top" alt="Spam SMS Detection" />
+              <div class="card-body text-center">
+                <h4 class="card-title">Spam SMS Detection</h4>
+                <span class="badge bg-secondary badge-pill">Python</span>
+                <span class="badge bg-secondary badge-pill">scikit-learn</span>
+                <span class="badge bg-secondary badge-pill">Streamlit</span>
+                <span class="badge bg-secondary badge-pill mb-2">ML</span><br />
+                <p class="mt-2">ML model to classify SMS messages as spam or ham with high precision</p>
+                <a href="https://github.com/krishna-viradiya/SpamSMSDetection" class="link">View Project</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-evenly mt-4 px-4">
+          <div class="post col-md-4 ai all col-10 mt-3 mt-md-0" data-aos="fade-up">
+            <div class="card">
+              <img src="images/house-prices.png" class="card-img-top" alt="House Price Prediction" />
+              <div class="card-body text-center">
+                <h4 class="card-title">House Price Prediction</h4>
+                <span class="badge bg-secondary badge-pill">Python</span>
+                <span class="badge bg-secondary badge-pill">XGBoost</span>
+                <span class="badge bg-secondary badge-pill">scikit-learn</span>
+                <span class="badge bg-secondary badge-pill mb-2">ML</span><br />
+                <p class="mt-2">Regression model to predict house prices using structured data</p>
+                <a href="#" class="link">View Project</a>
+              </div>
+            </div>
+          </div>
+          <div class="post col-md-4 web all col-10 mt-3 mt-md-0" data-aos="fade-up">
+            <div class="card">
+              <img src="images/cctv-system.png" class="card-img-top" alt="CCTV Recognition System" />
+              <div class="card-body text-center">
+                <h4 class="card-title">CCTV Recognition System</h4>
+                <span class="badge bg-secondary badge-pill">Python</span>
+                <span class="badge bg-secondary badge-pill">OpenCV</span>
+                <span class="badge bg-secondary badge-pill">TensorFlow</span>
+                <span class="badge bg-secondary badge-pill mb-2">Computer Vision</span><br />
+                <p class="mt-2">Real-time surveillance with motion detection and face recognition</p>
+                <a href="https://github.com/krishna-viradiya/CCTV-Recognition" class="link">View Project</a>
+              </div>
+            </div>
+          </div>
+          <div class="post col-md-4 iot all col-10 mt-3 mt-md-0" data-aos="fade-up">
+            <div class="card">
+              <img
+                src="images/weather-system.png"
+                class="card-img-top"
+                alt="Weather Surveillance System"
+              />
+              <div class="card-body text-center">
+                <h4 class="card-title">Weather Surveillance</h4>
+                <span class="badge bg-secondary badge-pill">C/Lua</span>
+                <span class="badge bg-secondary badge-pill">NodeMCU</span>
+                <span class="badge bg-secondary badge-pill">Arduino</span>
+                <span class="badge bg-secondary badge-pill mb-2">IoT</span><br />
+                <p class="mt-2">IoT-based system for remote weather monitoring and air quality detection</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- portfolio section ends here -->
+
+    <!-- experience section starts  -->
+    <section class="experience mt-5 pt-5" id="experience">
+      <div class="heading text-center">
+        <small>Professional Journey</small>
+        <h3>Work Experience</h3>
+      </div>
+      <div class="row justify-content-evenly mt-5">
+        <div class="col-md-10 col-12">
+          <div class="timeline">
+            <div class="timeline-item" data-aos="fade-right">
+              <div class="timeline-content">
+                <h4>GSFC University</h4>
+                <h5>Academic Associate</h5>
+                <span class="date">Jan 2025 - Present</span>
+                <p>Teaching C++ programming with Object-Oriented Concepts to 2nd-semester students and C programming to 1st-semester students, focusing on building strong programming foundations.</p>
+              </div>
+            </div>
+            <div class="timeline-item" data-aos="fade-left">
+              <div class="timeline-content">
+                <h4>Haronex Technology</h4>
+                <h5>Python Developer Intern</h5>
+                <span class="date">June 2025 - July 2025</span>
+                <p>Developed a Multi-Vendor Tour Package Management System using Django framework with features like vendor registration, package creation, booking management, and role-based access control.</p>
+              </div>
+            </div>
+            <div class="timeline-item" data-aos="fade-right">
+              <div class="timeline-content">
+                <h4>Oil and Natural Gas Corporation (ONGC)</h4>
+                <h5>Machine Learning Intern</h5>
+                <span class="date">Dec 2024 - Jan 2025</span>
+                <p>Created a Live Speech Diarizer and Transcription Model that can diarize mono channel audio into separate tracks with transcription capabilities for real-life applications like meeting summarization.</p>
+              </div>
+            </div>
+            <div class="timeline-item" data-aos="fade-left">
+              <div class="timeline-content">
+                <h4>MaMo Technologies</h4>
+                <h5>Graphic Design Intern</h5>
+                <span class="date">Dec 2023 - Jan 2024</span>
+                <p>Created visually appealing social media assets including posts, reels, stories, banners, and logos using Figma, Canva, and Illustrator to enhance brand presence.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- experience section ends here -->
+
+    <!-- education & certifications section starts -->
+    <section class="education mt-5 pb-5" id="education">
+      <div class="heading text-center pt-5">
+        <small>Academic Background</small>
+        <h3>Education & Certifications</h3>
+      </div>
+      <div class="row justify-content-evenly px-4 mt-4">
+        <div class="col-md-5 col-10" data-aos="fade-right">
+          <h4 class="mb-4">Education</h4>
+          <div class="edu-item mb-4">
+            <h5>Bachelor of Technology (AI, ML & DS Specialization)</h5>
+            <p class="mb-1">GSFC University, Computer Science and Engineering</p>
+            <p class="text-muted">October 2022 - Present | CGPA: 7.84</p>
+          </div>
+          <div class="edu-item mb-4">
+            <h5>Higher Secondary Certificate (Science)</h5>
+            <p class="mb-1">J. B. & KARP Vidya Sankul, Surat - CBSE</p>
+            <p class="text-muted">Percentage: 77.8%</p>
+          </div>
+          <div class="edu-item">
+            <h5>Secondary School Certificate</h5>
+            <p class="mb-1">J. B. & KARP Vidya Sankul, Surat - CBSE</p>
+            <p class="text-muted">Percentage: 92.6%</p>
+          </div>
+        </div>
+        <div class="col-md-5 col-10 mt-5 mt-md-0" data-aos="fade-left">
+          <h4 class="mb-4">Certifications</h4>
+          <ul class="cert-list">
+            <li>Basic Life Support (BLS) Program by Lifeline Foundation</li>
+            <li>NPTEL Online Certification in Social Network Analysis</li>
+            <li>UAS/Drone Technology by Centre for Development of Advanced Computing (C-DAC)</li>
+            <li>Python (Basic) Certified by HackerRank</li>
+            <li>SQL (Basic) Certified by HackerRank</li>
+          </ul>
+          
+          <h4 class="mt-5 mb-4">Research</h4>
+          <div class="research-item">
+            <h5>Thynk AI: A Smart Web-Based Mini Project Generator</h5>
+            <p class="text-muted">Published in Novyi Mir Research Journal (Vol. 10, Issue 5, May 2025 | UGC Care Group-II | Impact Factor: 5.3)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- education & certifications section ends here -->
+
+    <!-- contact section starts -->
+    <section class="contact py-5" id="contact">
+      <div class="heading text-center">
+        <small>Get in Touch</small>
+        <h3>Any Questions? Feel Free to Contact</h3>
+      </div>
+      <div class="row justify-content-evenly mt-5">
+        <div class="col-md-5 col-10 contact-details" data-aos="slide-right">
+          <div class="row justify-content-evenly">
+            <div class="col-1">
+              <i class="bi bi-telephone-fill"></i>
+            </div>
+            <div class="col-11">
+              <p>+91 98256 72500</p>
+            </div>
+          </div>
+          <div class="row justify-content-evenly">
+            <div class="col-1">
+              <i class="bi bi-send-fill"></i>
+            </div>
+            <div class="col-11">
+              <p>krishnaviradiya1108@gmail.com</p>
+            </div>
+          </div>
+          <div class="row justify-content-evenly">
+            <div class="col-1">
+              <i class="bi bi-linkedin"></i>
+            </div>
+            <div class="col-11">
+              <p>LinkedIn Profile</p>
+            </div>
+          </div>
+          <div class="row justify-content-evenly">
+            <div class="col-1">
+              <i class="bi bi-github"></i>
+            </div>
+            <div class="col-11">
+              <p>GitHub Profile</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-10 mt-3 mt-md-0" data-aos="slide-left">
+          <div class="contact-form">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Name"
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="E-mail"
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Subject"
+              />
+            </div>
+            <div class="mb-3">
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                placeholder="Message"
+                rows="5"
+              ></textarea>
+            </div>
+            <button class="c-btn h-btn mt-3 py-3 px-5 rounded-pill">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- contact section ends here -->
+
+      <!-- now we will make back to top button when user click on it it will be redirected to top page  -->
+    <button
+      type="button"
+      class="btn btn-floating btn-lg rounded-pill"
+      id="btn-back-to-top"
+    >
+      <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- footer section starts  -->
+    <footer class="text-center text-muted py-4">
+      <h3 class="text-white pt-4" data-aos="fade-up">Krishna Viradiya</h3>
+      <div class="link-group mt-5" data-aos="fade-up">
+        <a href="#home">Home</a>
+        <div class="vr"></div>
+        <a href="#about">About</a>
+        <div class="vr"></div>
+        <a href="#service">Services</a>
+        <div class="vr"></div>
+        <a href="#portfolio">Portfolio</a>
+        <div class="vr"></div>
+        <a href="#experience">Experience</a>
+        <div class="vr"></div>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="social-links mt-5" data-aos="fade-up">
+        <a href="https://www.linkedin.com/in/krishna-viradiya" class="rounded-pill linkedin">
+          <i class="bi bi-linkedin"></i>
+        </a>
+        <a href="https://github.com/krishna-viradiya" class="rounded-pill github">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="mailto:krishnaviradiya1108@gmail.com" class="rounded-pill email">
+          <i class="bi bi-envelope-fill"></i>
+        </a>
+      </div>
+      <hr class="text-muted my-4" />
+
+      <p>Copyright 2025 Krishna Viradiya | All Rights Reserved.</p>
+    </footer>
+    <!-- footer section ends here -->
+
+      <!-- bootstrap javascript cdn link  -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- AOS library javascript link  -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      // initializing AOS library
+      AOS.init({
+        duration: 1000,
+        offset: 50,
+      });
+    </script>
+    <!-- custom js file linking -->
+    <script src="js/script.js"></script>
     
-    <div class="about-content">
-      <p>Motivated Computer Science and Engineering pre-final year student from GSFC University specializing in Data Science, Artificial Intelligence, and Machine Learning. Passionate about AI/ML, Natural Language Processing, and Soft Computing with an interest in solving real-world problems. Possess hands-on experience with Graphic Design tools like Figma and Canva, along with foundational knowledge of Unity Software.</p>
-    </div>
-  </main>
-
-  <section id="education">
-    <h2>Education</h2>
-    <div class="education-item">
-      <h3>Bachelor of Technology (specialization in AI, ML & DS)</h3>
-      <p>Computer Science and Engineering, GSFC University</p>
-      <p>October 2022 - Present | CGPA: 7.68</p>
-    </div>
-    <div class="education-item">
-      <h3>Higher Secondary Certificate (Science [P, C, M]) from CBSE</h3>
-      <p>J. B. & KARP Vidya Sankul, Surat</p>
-      <p>Percentage: 77.8</p>
-    </div>
-    <div class="education-item">
-      <h3>Secondary School Certificate from CBSE</h3>
-      <p>J. B. & KARP Vidya Sankul, Surat</p>
-      <p>Percentage: 92.6</p>
-    </div>
-  </section>
-
-  <section id="skills">
-    <h2>Technical Skills</h2>
-    <div class="skills-container">
-      <div class="skill-category">
-        <h3>Programming Languages</h3>
-        <ul>
-          <li>Python</li>
-          <li>Java</li>
-          <li>C++</li>
-          <li>C</li>
-          <li>C# Scripting</li>
-        </ul>
-      </div>
-      <div class="skill-category">
-        <h3>Web Development</h3>
-        <ul>
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>JavaScript</li>
-          <li>PHP</li>
-        </ul>
-      </div>
-      <div class="skill-category">
-        <h3>Database Management</h3>
-        <ul>
-          <li>MySQL</li>
-          <li>Microsoft SQL</li>
-          <li>SQL Server</li>
-          <li>MongoDB</li>
-        </ul>
-      </div>
-      <div class="skill-category">
-        <h3>AI/ML Libraries</h3>
-        <ul>
-          <li>Flask</li>
-          <li>PyTorch</li>
-          <li>NumPy</li>
-          <li>Pandas</li>
-          <li>Matplotlib</li>
-          <li>Librosa</li>
-          <li>OpenCV</li>
-          <li>TensorFlow</li>
-        </ul>
-      </div>
-      <div class="skill-category">
-        <h3>Design Tools</h3>
-        <ul>
-          <li>Figma</li>
-          <li>Canva</li>
-          <li>Illustrator</li>
-        </ul>
-      </div>
-      <div class="skill-category">
-        <h3>Other Skills</h3>
-        <ul>
-          <li>Data Structures & Algorithms</li>
-          <li>OOPs Concepts</li>
-          <li>Problem Solving</li>
-          <li>Unity (AR/VR)</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="project-grid">
-      <div class="project-card">
-        <h3>Motion Triggered CCTV Recognition System</h3>
-        <p>Developed a system using OpenCV and TensorFlow with Haar Cascade Classifiers for motion detection and recognition.</p>
-        <p><strong>Technologies:</strong> Python, OpenCV, Flask, TensorFlow</p>
-      </div>
-      <div class="project-card">
-        <h3>VoiceDiarizer</h3>
-        <p>Created a system that diarizes mono audio tracks and transcribes speech using ECAPA-TDNN model and Google Web Speech API.</p>
-        <p><strong>Technologies:</strong> Python, PyTorch, SpeechBrain, pyannote.audio</p>
-        <a href="https://github.com/Kv1108/voice_processing" target="_blank">View on GitHub</a>
-      </div>
-      <div class="project-card">
-        <h3>Cross-Lingual Word Sense Disambiguation</h3>
-        <p>Developed an NLP system for word sense disambiguation across languages using BERT embeddings and neural machine translation.</p>
-        <p><strong>Technologies:</strong> Python, Transformers, NLTK, WordNet</p>
-        <a href="https://colab.research.google.com/drive/1nFwLLJMXTQmNxBkAn1LVJnii4xn4-Nrm?usp=sharing" target="_blank">View on Colab</a>
-      </div>
-      <div class="project-card">
-        <h3>Remote Weather Surveillance System</h3>
-        <p>IoT-based system to monitor weather factors like temperature, humidity, and air quality using NodeMCU and Arduino Cloud.</p>
-        <p><strong>Technologies:</strong> C, Lua, DHT11, MO135, NodeMCU</p>
-      </div>
-      <div class="project-card">
-        <h3>Predicting Sales Prices using ML</h3>
-        <p>Machine learning model to predict house prices using XGBoost Regression and feature engineering techniques.</p>
-        <p><strong>Technologies:</strong> Python, Scikit-learn, XGBoost</p>
-      </div>
-      <div class="project-card">
-        <h3>Arduino Voice Control Car</h3>
-        <p>Built a voice-controlled car using Arduino Uno with Bluetooth module and ultrasonic sensors for obstacle detection.</p>
-        <p><strong>Technologies:</strong> C++, Arduino, HC-05 Bluetooth</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="experience">
-    <h2>Professional Experience</h2>
-    <div class="experience-item">
-      <h3>GSFC University - Academic Associate</h3>
-      <p class="experience-date">2023 - Present</p>
-      <ul>
-        <li>Taught C++ programming with Object-Oriented Concepts to junior students</li>
-        <li>Designed practical, lab-based sessions for better understanding of OOP fundamentals</li>
-        <li>Received positive feedback for effective and approachable teaching style</li>
-      </ul>
-    </div>
-    <div class="experience-item">
-      <h3>ONGC - Machine Learning Intern</h3>
-      <p class="experience-date">2024</p>
-      <ul>
-        <li>Created a Live Speech Diarizer and Transcription Model</li>
-        <li>Developed system to diarize mono channel audio into separate tracks</li>
-        <li>Implemented real-time transcription with minimal latency</li>
-      </ul>
-    </div>
-    <div class="experience-item">
-      <h3>MaMo Technologies - Graphic Design Intern</h3>
-      <p class="experience-date">2023</p>
-      <ul>
-        <li>Created visually appealing social media assets (posts, reels, stories)</li>
-        <li>Designed banners and logos to enhance brand presence</li>
-        <li>Optimized engagement through content calendar planning</li>
-      </ul>
-    </div>
-    <div class="experience-item">
-      <h3>Krivi Infotech - Software Intern</h3>
-      <p class="experience-date">2022</p>
-      <ul>
-        <li>Developed a Laboratory Management System</li>
-        <li>Gained hands-on experience in VB.NET and SQL</li>
-        <li>Enhanced database management skills</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="achievements">
-    <h2>Achievements & Certifications</h2>
-    <div class="achievements-container">
-      <div class="achievements-section">
-        <h3>Honors & Awards</h3>
-        <ul>
-          <li>Runner-up in Case Unfold event during Ananta'25</li>
-          <li>Ms. Perfectionist (Ananta'24) for outstanding leadership</li>
-          <li>Winner in TechXhibit'24 Project Exhibition at GSFC University</li>
-          <li>Runner-up in Code Pictionary event (Ananta'24)</li>
-          <li>Winner of Hurry 5 event (Ananta'24)</li>
-          <li>2nd position in Best Painting competition (2022-2023)</li>
-        </ul>
-      </div>
-      <div class="achievements-section">
-        <h3>Certifications</h3>
-        <ul>
-          <li>Basic Life Support (BLS) Program by Lifeline Foundation</li>
-          <li>NPTEL Online Certification in Social Network Analysis</li>
-          <li>UAS/Drone Technology by C-DAC</li>
-          <li>Python (Basic) - HackerRank</li>
-          <li>SQL (Basic) - HackerRank</li>
-        </ul>
-      </div>
-      <div class="achievements-section">
-        <h3>Research & Publications</h3>
-        <ul>
-          <li>Published paper "Thynk AI: A Smart Web-Based Mini Project Generator" in Novyi Mir Research Journal (UGC Care Group-II, Impact Factor: 5.3)</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <div class="contact-container">
-      <div class="contact-info">
-        <p><i class="fas fa-envelope"></i> <a href="mailto:22bt04056@gsfcuniversity.ac.in">22bt04056@gsfcuniversity.ac.in</a></p>
-        <p><i class="fas fa-phone"></i> <a href="tel:+919825672500">+91 98256 72500</a></p>
-        <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/krishna-viradiya-0b1470256/" target="_blank">linkedin.com/in/krishna-viradiya</a></p>
-        <p><i class="fab fa-github"></i> <a href="https://github.com/Kv1108" target="_blank">github.com/Kv1108</a></p>
-        <p><i class="fas fa-globe"></i> <a href="https://portfolio-krishnas-projects-0cb63c57.vercel.app" target="_blank">My Portfolio</a></p>
-      </div>
-      <div class="contact-form">
-        <form action="#" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required>
-          <input type="email" name="email" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Your Message" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Krishna Viradiya. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+  </body>
 </html>
