@@ -152,21 +152,23 @@ body{
     padding: 12% 10% 10% 15%;
     background-color: #fff;
     text-align: center;
-    border-radius: 10%;
+    border-radius: 5%;
 }
 .progress-card:hover{
     transform: scale(1.1,1.1);
     transition-duration: 0.6s;
+    align-items: center;
 }
 .circular-progress{
-    position: relative;
+    position: cen;
     height: 130px;
     width: 130px;
     border-radius: 50%;
-    background: conic-gradient(#7d2ae8 3.6deg, #ededed 0deg);
+    background: conic-gradient(#ffffff 3.6deg, #7525b6 100deg);
     display: flex;
     align-items: center;
     justify-content: center;
+    ;
 }
 .circular-progress::before{
     content: "";
