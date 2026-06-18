@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krishna Viradiya | AI, ML & Design Portfolio</title>
+    <title>Krishna Viradiya | AI, ML & Automation Portfolio</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://unpkg.com/lucide@latest"></script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
     
     <style>
@@ -26,7 +24,6 @@
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            /* Subtle radial gradient for depth */
             background-image: radial-gradient(circle at 50% 0%, #1a2e22 0%, var(--bg-dark) 40%);
             overflow-x: hidden;
         }
@@ -56,7 +53,6 @@
         }
 
         /* --- ANIMATIONS --- */
-        /* Fade In Up Observer Class */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -119,24 +115,9 @@
     <header class="fixed top-0 left-0 w-full z-[1000] glass-panel border-b border-white/5 transition-all duration-300" id="navbar">
         <nav class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <a href="#hero" class="group relative inline-block w-10 h-10 transition-colors">
-    
-    <!-- Default Logo -->
-    <img 
-        src="/images/Group 60462 (1).png"
-        alt="KV Logo"
-        class="w-full h-full object-contain group-hover:opacity-0 transition-opacity duration-300"
-    />
-
-    <!-- Hover Logo -->
-    <img 
-        src="/images/Group 60462 (3).png"
-        alt="KV Logo Hover"
-        class="w-full h-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-    />
-
-</a>
-
-
+                <img src="/images/Group 60462 (1).png" alt="KV Logo" class="w-full h-full object-contain group-hover:opacity-0 transition-opacity duration-300"/>
+                <img src="/images/Group 60462 (3).png" alt="KV Logo Hover" class="w-full h-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+            </a>
 
             <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest text-gray-400">
                 <a href="#about" class="hover:text-white transition-colors nav-link">About</a>
@@ -150,7 +131,7 @@
             </button>
         </nav>
 
-        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 md:hidden flex flex-col items-center py-8 space-y-6 text-lg font-medium text-gray-300">
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 md:hidden flex flex-col items-center py-8 space-y-6 text-lg font-medium text-gray-300 uppercase">
             <a href="#about" class="mobile-link">About</a>
             <a href="#projects" class="mobile-link">Projects</a>
             <a href="#experience" class="mobile-link">Experience</a>
@@ -162,19 +143,19 @@
 
         <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
             <div class="reveal">
-                <p class="font-mono text-green-400 mb-4 tracking-widest text-sm md:text-base">AI/ML ENGINEER & DESIGNER</p>
-                <h1 class="font-anton text-6xl md:text-8xl lg:text-9xl leading-none text-white mb-6">
+                <p class="font-mono text-green-400 mb-4 tracking-widest text-sm md:text-base uppercase">AI/ML & Automation Engineer</p>
+                <h1 class="font-anton text-6xl md:text-8xl lg:text-9xl leading-none text-white mb-6 uppercase">
                     KRISHNA <br /> VIRADIYA
                 </h1>
                 <p class="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl font-light mb-10 leading-relaxed">
-                    “I design and build AI-driven products that transform data into intelligent, real-world solutions.”
+                    “I design and build AI-driven products and automated systems that transform complex data into streamlined, real-world solutions.”
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="#projects" class="bg-green-500 text-black px-8 py-3 rounded-full font-bold tracking-wide hover:bg-green-400 transition-all transform hover:scale-105 flex items-center shadow-[0_0_20px_rgba(0,255,102,0.3)]">
+                    <a href="#projects" class="bg-green-500 text-black px-8 py-3 rounded-full font-bold tracking-wide hover:bg-green-400 transition-all transform hover:scale-105 flex items-center shadow-[0_0_20px_rgba(0,255,102,0.3)] uppercase">
                         Explore My Work <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
                     </a>
-                    <a href="images/Krishna Viradiya_RESUME_AIML.pdf" download="Krishna-Viradiya-Resume.pdf" class="border border-gray-600 text-white px-8 py-3 rounded-full font-medium tracking-wide hover:border-white hover:bg-white/5 transition-all flex items-center">
+                    <a href="images/Resume_KrishnaViradiya.pdf" download="Krishna-Viradiya-Resume.pdf" class="border border-gray-600 text-white px-8 py-3 rounded-full font-medium tracking-wide hover:border-white hover:bg-white/5 transition-all flex items-center uppercase">
                         Download Resume <i data-lucide="download" class="w-4 h-4 ml-2"></i>
                     </a>
                 </div>
@@ -192,11 +173,10 @@
                     <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">About Me</h2>
                     <div class="space-y-4 text-gray-400 leading-relaxed">
                         <p>
-                            I specialize in <strong class="text-green-400">AI and Machine Learning</strong>, building systems that solve real-world challenges in
-                            <strong class="text-white">speech processing</strong>, <strong class="text-white">NLP</strong>, and <strong class="text-white">computer vision</strong>.
+                            I specialize in <strong class="text-green-400">AI, Machine Learning, and Automation</strong>, building scalable systems that solve real-world challenges in <strong class="text-white">document processing</strong>, <strong class="text-white">computer vision</strong>, and <strong class="text-white">speech recognition</strong>.
                         </p>
                         <p>
-                            Alongside my engineering background, I work extensively with <strong class="text-white">graphic design</strong> (Figma, Illustrator) and <strong class="text-white">3D development</strong> (Unity), allowing me to merge analytical precision with creative clarity.
+                            With a strong foundation in <strong class="text-white">Python</strong> and backend logic, I focus on developing intelligent pipelines that streamline operations, from complex validation frameworks to real-time object tracking.
                         </p>
                     </div>
 
@@ -207,15 +187,15 @@
                         </div>
                         <div class="flex items-center space-x-3 text-gray-300">
                             <i data-lucide="code-xml" class="text-green-500 w-5 h-5"></i>
-                            <span>Python, C++, Java</span>
+                            <span>Python, C/C++, Java</span>
                         </div>
                         <div class="flex items-center space-x-3 text-gray-300">
-                            <i data-lucide="database" class="text-green-500 w-5 h-5"></i>
-                            <span>SQL & MongoDB</span>
+                            <i data-lucide="bot" class="text-green-500 w-5 h-5"></i>
+                            <span>Automation & OCR</span>
                         </div>
                         <div class="flex items-center space-x-3 text-gray-300">
-                            <i data-lucide="palette" class="text-green-500 w-5 h-5"></i>
-                            <span>Figma & Canva</span>
+                            <i data-lucide="git-merge" class="text-green-500 w-5 h-5"></i>
+                            <span>Git & Version Control</span>
                         </div>
                     </div>
                 </div>
@@ -227,15 +207,15 @@
                         <ul class="space-y-4">
                             <li class="flex items-start">
                                 <span class="text-green-500 mr-3 mt-1">▹</span>
-                                <span class="text-gray-300">Building Real-Time AI Systems</span>
+                                <span class="text-gray-300">Architecting Python-based automation for aviation ops</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-green-500 mr-3 mt-1">▹</span>
-                                <span class="text-gray-300">Strengthening Machine Learning Engineering Skills</span>
+                                <span class="text-gray-300">Developing AI-powered web solutions & generators</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-green-500 mr-3 mt-1">▹</span>
-                                <span class="text-gray-300">Advancing Skills in Speech Processing & NLP</span>
+                                <span class="text-gray-300">Advancing skills in Computer Vision & Speech Processing</span>
                             </li>
                         </ul>
                     </div>
@@ -255,8 +235,57 @@
                     <div class="project-card glass-panel p-8 rounded-2xl hover:border-green-500/50 transition duration-300 reveal">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="w-full md:w-48 h-32 bg-gray-900 rounded-lg flex flex-col items-center justify-center border border-white/10 shrink-0">
+                                <i data-lucide="shield-check" class="w-8 h-8 text-green-500 mb-2"></i>
+                                <span class="font-anton text-2xl text-white tracking-wider uppercase">VISION</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start flex-wrap gap-2">
+                                    <h3 class="text-2xl font-bold text-white group-hover:text-green-400 transition">Smart CCTV Surveillance System</h3>
+                                    <div class="flex gap-2 flex-wrap">
+                                        <span class="tech-pill">Python</span>
+                                        <span class="tech-pill">OpenCV</span>
+                                        <span class="tech-pill">YOLOv8</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-400 mt-4 mb-6 leading-relaxed">
+                                    An AI-powered smart surveillance system engineered for real-time object detection, advanced tracking, and comprehensive security monitoring capabilities.
+                                </p>
+                                <a href="https://github.com/Kv1108" target="_blank" class="text-white text-sm font-bold uppercase tracking-widest flex items-center hover:text-green-400 transition-colors">
+                                    View Project <i data-lucide="arrow-up-right" class="w-4 h-4 ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card glass-panel p-8 rounded-2xl hover:border-green-500/50 transition duration-300 reveal">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="w-full md:w-48 h-32 bg-gray-900 rounded-lg flex flex-col items-center justify-center border border-white/10 shrink-0">
+                                <i data-lucide="cpu" class="w-8 h-8 text-green-500 mb-2"></i>
+                                <span class="font-anton text-2xl text-white tracking-wider uppercase">WEB AI</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start flex-wrap gap-2">
+                                    <h3 class="text-2xl font-bold text-white">Thynk AI: Project Generator</h3>
+                                    <div class="flex gap-2 flex-wrap">
+                                        <span class="tech-pill">Artificial Intelligence</span>
+                                        <span class="tech-pill">Web Dev</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-400 mt-4 mb-6 leading-relaxed">
+                                    A smart web-based mini project generator. Successfully published the project and its underlying methodology in the Novyi Mir Research Journal (Vol. 10, Issue 5, May 2025), a UGC Care Group-II indexed journal.
+                                </p>
+                                <a href="https://novyimir.eu/wp-content/uploads/16-NMRJ5423.pdf" target="_blank" class="text-white text-sm font-bold uppercase tracking-widest flex items-center hover:text-green-400 transition-colors">
+                                    View Publication <i data-lucide="arrow-up-right" class="w-4 h-4 ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card glass-panel p-8 rounded-2xl hover:border-green-500/50 transition duration-300 reveal">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="w-full md:w-48 h-32 bg-gray-900 rounded-lg flex flex-col items-center justify-center border border-white/10 shrink-0">
                                 <i data-lucide="mic" class="w-8 h-8 text-green-500 mb-2"></i>
-                                <span class="font-anton text-2xl text-white tracking-wider">SPEECH</span>
+                                <span class="font-anton text-2xl text-white tracking-wider uppercase">SPEECH</span>
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start flex-wrap gap-2">
@@ -281,7 +310,7 @@
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="w-full md:w-48 h-32 bg-gray-900 rounded-lg flex flex-col items-center justify-center border border-white/10 shrink-0">
                                 <i data-lucide="languages" class="w-8 h-8 text-green-500 mb-2"></i>
-                                <span class="font-anton text-2xl text-white tracking-wider">NLP</span>
+                                <span class="font-anton text-2xl text-white tracking-wider uppercase">NLP</span>
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start flex-wrap gap-2">
@@ -306,7 +335,7 @@
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="w-full md:w-48 h-32 bg-gray-900 rounded-lg flex flex-col items-center justify-center border border-white/10 shrink-0">
                                 <i data-lucide="shield-alert" class="w-8 h-8 text-green-500 mb-2"></i>
-                                <span class="font-anton text-2xl text-white tracking-wider">TEXT ML</span>
+                                <span class="font-anton text-2xl text-white tracking-wider uppercase">TEXT ML</span>
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start flex-wrap gap-2">
@@ -331,7 +360,7 @@
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="w-full md:w-48 h-32 bg-gray-900 rounded-lg flex flex-col items-center justify-center border border-white/10 shrink-0">
                                 <i data-lucide="trending-up" class="w-8 h-8 text-green-500 mb-2"></i>
-                                <span class="font-anton text-2xl text-white tracking-wider">REGRESSION</span>
+                                <span class="font-anton text-2xl text-white tracking-wider uppercase">REGRESSION</span>
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start flex-wrap gap-2">
@@ -352,31 +381,6 @@
                         </div>
                     </div>
 
-                    <div class="project-card glass-panel p-8 rounded-2xl hover:border-green-500/50 transition duration-300 reveal">
-                        <div class="flex flex-col md:flex-row gap-8">
-                            <div class="w-full md:w-48 h-32 bg-gray-900 rounded-lg flex flex-col items-center justify-center border border-white/10 shrink-0">
-                                <i data-lucide="eye" class="w-8 h-8 text-green-500 mb-2"></i>
-                                <span class="font-anton text-2xl text-white tracking-wider">VISION</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between items-start flex-wrap gap-2">
-                                    <h3 class="text-2xl font-bold text-white">Motion-Triggered CCTV</h3>
-                                    <div class="flex gap-2 flex-wrap">
-                                        <span class="tech-pill">OpenCV</span>
-                                        <span class="tech-pill">TensorFlow</span>
-                                        <span class="tech-pill">Flask</span>
-                                    </div>
-                                </div>
-                                <p class="text-gray-400 mt-4 mb-6 leading-relaxed">
-                                    Intelligent surveillance combining motion detection with face recognition. The system triggers events only when significant motion involves a human face.
-                                </p>
-                                <a href="https://github.com/Kv1108/motion-triggered-cctv" target="_blank" class="text-white text-sm font-bold uppercase tracking-widest flex items-center hover:text-green-400 transition-colors">
-                                    View Project <i data-lucide="arrow-up-right" class="w-4 h-4 ml-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -392,12 +396,24 @@
                 <div class="timeline-item pl-8 md:pl-12 relative reveal">
                     <div class="timeline-dot"></div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
+                        <h3 class="text-2xl font-bold text-white">Tech-Ops Automation Intern</h3>
+                        <span class="font-mono text-green-500 text-sm">Feb 2026 – Present</span>
+                    </div>
+                    <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Flydocs India Pvt. Ltd. (Lufthansa Technik Group) </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        Developing Python-based automation systems using <span class="text-white">Selenium</span> and intelligent <span class="text-white">OCR pattern-matching</span> to extract, validate, and process aviation maintenance records. Standardizing compliance checks to accelerate engineering operations.
+                    </p>
+                </div>
+
+                <div class="timeline-item pl-8 md:pl-12 relative reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
                         <h3 class="text-2xl font-bold text-white">Academic Associate</h3>
                         <span class="font-mono text-green-500 text-sm">Jan 2025 – Nov 2025</span>
                     </div>
                     <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">GSFC University</p>
                     <p class="text-gray-400 leading-relaxed">
-                        Teaching assistant for B.Tech students in <span class="text-white">C++ (OOP)</span> and <span class="text-white">C programming</span>. Designed lab-driven sessions to strengthen algorithmic problem-solving skills.
+                        Delivered core lab sessions on <span class="text-white">C and C++ programming</span>. Simplified complex concepts like dynamic memory allocation, file I/O, and OOP architecture through hands-on technical guidance and code evaluation.
                     </p>
                 </div>
 
@@ -405,23 +421,23 @@
                     <div class="timeline-dot"></div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
                         <h3 class="text-2xl font-bold text-white">Machine Learning Intern</h3>
-                        <span class="font-mono text-green-500 text-sm">Dec 2024 – Jan 2025</span>
+                        <span class="font-mono text-green-500 text-sm">Dec 2024</span>
                     </div>
                     <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">ONGC</p>
                     <p class="text-gray-400 leading-relaxed">
-                        Built a live <span class="text-white">speech diarization and transcription system</span> for mono-channel audio using PyTorch, Flask, and modern speech-processing pipelines.
+                        Engineered an end-to-end real-time speech processing pipeline integrating <span class="text-white">Automatic Speech Recognition (ASR)</span>, speaker diarization, and noise reduction for accurate speaker-attributed transcriptions.
                     </p>
                 </div>
 
                 <div class="timeline-item pl-8 md:pl-12 relative reveal">
                     <div class="timeline-dot"></div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
-                        <h3 class="text-2xl font-bold text-white">B.Tech (AI, ML & DS)</h3>
-                        <span class="font-mono text-green-500 text-sm">Oct 2022 – Present</span>
+                        <h3 class="text-2xl font-bold text-white">B.Tech (CSE - AI, ML & DS)</h3>
+                        <span class="font-mono text-green-500 text-sm">2022 – 2026</span>
                     </div>
                     <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">GSFC University</p>
                     <p class="text-gray-400 leading-relaxed">
-                        Specializing in Artificial Intelligence and Data Science. <br> CGPA: <span class="text-white">7.84</span>.
+                        Bachelor of Technology in Computer Science and Engineering, specializing in Artificial Intelligence, Machine Learning, and Data Science.
                     </p>
                 </div>
 
@@ -431,36 +447,35 @@
         <footer id="contact" class="py-20 bg-gray-900 border-t border-gray-800 text-center">
             <div class="max-w-2xl mx-auto px-6 reveal">
                 <span class="section-tag">04 / Connect</span>
-                <h2 class="text-4xl font-bold text-white mb-8">Ready to Collaborate?</h2>
+                <h2 class="text-4xl font-bold text-white mb-8">Let's Collaborate</h2>
                 <p class="text-gray-400 mb-10">
-                    I am actively seeking full-time roles and open to contract work in AI/ML engineering.
+                    Always open to discussing AI/ML engineering, process automation, and innovative backend solutions.
                 </p>
                 
                 <div class="flex flex-col space-y-4 mb-12">
                     <div class="flex items-center justify-center space-x-2">
-                        <i data-lucide="mail" class="w-5 h-5 text-green-500"></i>
+                        <span class="text-green-500 font-mono text-sm tracking-widest">Email:</span>
                         <a href="mailto:krishnaviradiya1108@gmail.com" class="text-xl md:text-2xl font-bold text-white hover:text-green-400 transition">
                             krishnaviradiya1108@gmail.com
                         </a>
                     </div>
                     <div class="flex items-center justify-center space-x-2">
-                        <i data-lucide="phone" class="w-5 h-5 text-green-500"></i>
+                        <span class="text-green-500 font-mono text-sm tracking-widest">Phone:</span>
                         <span class="text-gray-300 font-medium">+91 98256 72500</span>
                     </div>
                 </div>
 
-                <div class="flex justify-center space-x-8 mb-12">
-                    <a href="https://www.linkedin.com/in/krishna-viradiya-0b1470256/" target="_blank" class="text-gray-400 hover:text-white transform hover:scale-110 transition">
-                        <i data-lucide="linkedin" class="w-8 h-8"></i>
+                <div class="flex justify-center space-x-8 mb-12 font-mono text-sm uppercase tracking-widest">
+                    <a href="https://www.linkedin.com/in/Krishna-Viradiya" target="_blank" class="text-gray-400 hover:text-white transition border-b border-transparent hover:border-white pb-1">
+                        LinkedIn
                     </a>
-                    </a>
-                    <a href="https://github.com/Kv1108" target="_blank" class="text-gray-400 hover:text-white transform hover:scale-110 transition">
-                        <i data-lucide="github" class="w-8 h-8"></i>
+                    <a href="https://github.com/Kv1108" target="_blank" class="text-gray-400 hover:text-white transition border-b border-transparent hover:border-white pb-1">
+                        GitHub
                     </a>
                 </div>
 
-                <p class="text-gray-600 text-xs uppercase tracking-widest font-mono">
-                    &copy; <span id="year"></span> Krishna Viradiya. 
+                <p class="text-gray-600 text-xs tracking-widest font-mono uppercase">
+                    &copy; <span id="year"></span> Krishna Viradiya.
                 </p>
             </div>
         </footer>
@@ -468,7 +483,7 @@
     </main>
 
     <div id="toast" class="fixed bottom-8 right-8 bg-green-500 text-black px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_rgba(0,255,102,0.4)] transform translate-y-20 opacity-0 transition-all duration-300 z-50">
-        </div>
+    </div>
 
     <script>
         // 1. Initialize Icons
@@ -538,7 +553,6 @@
 
         function initParticles() {
             particles = [];
-            // Adjust particle count based on screen size
             const count = window.innerWidth < 768 ? 30 : 60;
             for (let i = 0; i < count; i++) {
                 particles.push(new Particle());
@@ -596,7 +610,7 @@
             document.getElementById("scroll-progress").style.width = scrolled + "%";
         };
 
-        // 6. Toast Notification Function (Only for missing LinkedIn)
+        // 6. Toast Notification Function
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg + ": Link not found in source.";
@@ -610,7 +624,6 @@
         // 7. Smooth Scroll Fix for Fixed Header
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                // Ignore empty links or links with onclick events (like the toast)
                 if(this.getAttribute('href') === '#' && this.hasAttribute('onclick')) return;
 
                 e.preventDefault();
