@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Blog Post | Krishna Viradiya</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="antialiased selection:bg-green-900 selection:text-white" data-page="blogs">
+
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 z-[1002] transition-all duration-100 ease-out bg-green-500 w-0"></div>
+
+    <div id="canvas-container">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full z-[1000] glass-panel border-b border-white/5 transition-all duration-300" id="navbar">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html#hero" class="group relative inline-block w-10 h-10 transition-colors">
+                <img src="images/Group 60462 (1).png" alt="KV Logo" class="w-full h-full object-contain group-hover:opacity-0 transition-opacity duration-300"/>
+                <img src="images/Group 60462 (3).png" alt="KV Logo Hover" class="w-full h-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+            </a>
+
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest text-gray-400">
+                <a href="index.html#about" data-page="home" class="hover:text-white transition-colors nav-link">About</a>
+                <a href="index.html#projects" data-page="home" class="hover:text-white transition-colors nav-link">Projects</a>
+                <a href="index.html#experience" data-page="home" class="hover:text-white transition-colors nav-link">Experience</a>
+                <a href="blogs.html" data-page="blogs" class="hover:text-white transition-colors nav-link">Blogs</a>
+                <a href="courses.html" data-page="courses" class="hover:text-white transition-colors nav-link">Courses</a>
+                <a href="index.html#contact" data-page="home" class="hover:text-white transition-colors nav-link">Contact</a>
+            </div>
+
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 md:hidden flex flex-col items-center py-8 space-y-6 text-lg font-medium text-gray-300 uppercase">
+            <a href="index.html#about" data-page="home" class="mobile-link">About</a>
+            <a href="index.html#projects" data-page="home" class="mobile-link">Projects</a>
+            <a href="index.html#experience" data-page="home" class="mobile-link">Experience</a>
+            <a href="blogs.html" data-page="blogs" class="mobile-link">Blogs</a>
+            <a href="courses.html" data-page="courses" class="mobile-link">Courses</a>
+            <a href="index.html#contact" data-page="home" class="mobile-link">Contact</a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <article class="max-w-3xl mx-auto px-6 py-16">
+
+            <a href="blogs.html" class="inline-flex items-center text-gray-400 hover:text-white text-sm uppercase tracking-widest mb-10 transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Blogs
+            </a>
+
+            <div id="post-loading" class="space-y-4">
+                <div class="skeleton h-4 w-1/4"></div>
+                <div class="skeleton h-10 w-3/4"></div>
+                <div class="skeleton h-64 w-full mt-6"></div>
+            </div>
+
+            <div id="post-error" class="hidden text-center py-20">
+                <i data-lucide="alert-triangle" class="w-10 h-10 text-red-500 mx-auto mb-4"></i>
+                <p class="text-gray-500">Couldn't find that post. It may have been moved or unpublished.</p>
+                <a href="blogs.html" class="text-green-400 underline text-sm mt-4 inline-block">Go back to all blogs</a>
+            </div>
+
+            <div id="post-content" class="hidden">
+                <span id="post-date" class="font-mono text-xs text-green-500 uppercase tracking-widest"></span>
+                <h1 id="post-title" class="text-3xl md:text-5xl font-bold text-white mt-3 mb-8 leading-tight"></h1>
+                <img id="post-cover" class="w-full rounded-2xl border border-white/10 mb-10 hidden" loading="lazy">
+                <div id="post-body" class="prose-article"></div>
+            </div>
+
+        </article>
+    </main>
+
+    <footer class="py-12 bg-gray-900 border-t border-gray-800 text-center">
+        <p class="text-gray-600 text-xs tracking-widest font-mono uppercase">&copy; <span id="year"></span> Krishna Viradiya.</p>
+    </footer>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="assets/site.js"></script>
+    <script>
+        async function loadPost() {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            const loadingEl = document.getElementById('post-loading');
+            const errorEl = document.getElementById('post-error');
+            const contentEl = document.getElementById('post-content');
+            const sb = getSupabase();
+
+            if (!slug || !sb) {
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                const { data, error } = await sb
+                    .from('posts')
+                    .select('title, body, cover_image_url, published_at, published')
+                    .eq('slug', slug)
+                    .eq('published', true)
+                    .single();
+
+                if (error || !data) throw error || new Error('Not found');
+
+                document.getElementById('page-title').textContent = data.title + ' | Krishna Viradiya';
+                document.getElementById('post-date').textContent = formatDate(data.published_at);
+                document.getElementById('post-title').textContent = data.title;
+                document.getElementById('post-body').innerHTML = renderRichText(data.body);
+                highlightCodeBlocks(document.getElementById('post-body'));
+
+                if (data.cover_image_url) {
+                    const cover = document.getElementById('post-cover');
+                    cover.src = data.cover_image_url;
+                    cover.alt = data.title;
+                    cover.classList.remove('hidden');
+                }
+
+                loadingEl.classList.add('hidden');
+                contentEl.classList.remove('hidden');
+                if (window.lucide) lucide.createIcons();
+
+            } catch (err) {
+                console.error('Failed to load post:', err);
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPost);
+    </script>
+</body>
+</html>

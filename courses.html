@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses | Krishna Viradiya</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="antialiased selection:bg-green-900 selection:text-white" data-page="courses">
+
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 z-[1002] transition-all duration-100 ease-out bg-green-500 w-0"></div>
+
+    <div id="canvas-container">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full z-[1000] glass-panel border-b border-white/5 transition-all duration-300" id="navbar">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html#hero" class="group relative inline-block w-10 h-10 transition-colors">
+                <img src="images/Group 60462 (1).png" alt="KV Logo" class="w-full h-full object-contain group-hover:opacity-0 transition-opacity duration-300"/>
+                <img src="images/Group 60462 (3).png" alt="KV Logo Hover" class="w-full h-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+            </a>
+
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest text-gray-400">
+                <a href="index.html#about" data-page="home" class="hover:text-white transition-colors nav-link">About</a>
+                <a href="index.html#projects" data-page="home" class="hover:text-white transition-colors nav-link">Projects</a>
+                <a href="index.html#experience" data-page="home" class="hover:text-white transition-colors nav-link">Experience</a>
+                <a href="blogs.html" data-page="blogs" class="hover:text-white transition-colors nav-link">Blogs</a>
+                <a href="courses.html" data-page="courses" class="hover:text-white transition-colors nav-link">Courses</a>
+                <a href="index.html#contact" data-page="home" class="hover:text-white transition-colors nav-link">Contact</a>
+            </div>
+
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 md:hidden flex flex-col items-center py-8 space-y-6 text-lg font-medium text-gray-300 uppercase">
+            <a href="index.html#about" data-page="home" class="mobile-link">About</a>
+            <a href="index.html#projects" data-page="home" class="mobile-link">Projects</a>
+            <a href="index.html#experience" data-page="home" class="mobile-link">Experience</a>
+            <a href="blogs.html" data-page="blogs" class="mobile-link">Blogs</a>
+            <a href="courses.html" data-page="courses" class="mobile-link">Courses</a>
+            <a href="index.html#contact" data-page="home" class="mobile-link">Contact</a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <section class="py-20 px-6 max-w-6xl mx-auto">
+            <div class="mb-16 text-center reveal">
+                <span class="section-tag">Code, Chapter by Chapter</span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Courses</h1>
+                <p class="text-gray-400 max-w-xl mx-auto">
+                    Free walkthroughs of Python, C, and whatever else is worth explaining — broken into bite-sized chapters with runnable code.
+                </p>
+            </div>
+
+            <div id="course-skeleton" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-panel rounded-2xl p-6 space-y-3">
+                    <div class="skeleton h-10 w-10 rounded-lg"></div>
+                    <div class="skeleton h-5 w-2/3"></div>
+                    <div class="skeleton h-4 w-full"></div>
+                    <div class="skeleton h-4 w-1/2"></div>
+                </div>
+                <div class="glass-panel rounded-2xl p-6 space-y-3">
+                    <div class="skeleton h-10 w-10 rounded-lg"></div>
+                    <div class="skeleton h-5 w-2/3"></div>
+                    <div class="skeleton h-4 w-full"></div>
+                    <div class="skeleton h-4 w-1/2"></div>
+                </div>
+                <div class="glass-panel rounded-2xl p-6 space-y-3">
+                    <div class="skeleton h-10 w-10 rounded-lg"></div>
+                    <div class="skeleton h-5 w-2/3"></div>
+                    <div class="skeleton h-4 w-full"></div>
+                    <div class="skeleton h-4 w-1/2"></div>
+                </div>
+            </div>
+
+            <div id="course-empty" class="hidden text-center py-20">
+                <i data-lucide="book-open" class="w-10 h-10 text-gray-600 mx-auto mb-4"></i>
+                <p class="text-gray-500">No courses published yet. First chapter coming soon.</p>
+            </div>
+
+            <div id="course-error" class="hidden text-center py-20">
+                <i data-lucide="alert-triangle" class="w-10 h-10 text-red-500 mx-auto mb-4"></i>
+                <p class="text-gray-500">Couldn't load courses right now. Please refresh in a moment.</p>
+            </div>
+
+            <div id="course-grid" class="hidden grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </section>
+    </main>
+
+    <footer class="py-12 bg-gray-900 border-t border-gray-800 text-center">
+        <p class="text-gray-600 text-xs tracking-widest font-mono uppercase">&copy; <span id="year"></span> Krishna Viradiya.</p>
+    </footer>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="assets/site.js"></script>
+    <script>
+        async function loadCourses() {
+            const skeleton = document.getElementById('course-skeleton');
+            const grid = document.getElementById('course-grid');
+            const empty = document.getElementById('course-empty');
+            const errorEl = document.getElementById('course-error');
+            const sb = getSupabase();
+
+            if (!sb) {
+                skeleton.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                // Fetch courses, and for each one count published chapters
+                const { data: courses, error } = await sb
+                    .from('courses')
+                    .select('slug, title, description, icon, language')
+                    .eq('published', true)
+                    .order('sort_order', { ascending: true });
+
+                if (error) throw error;
+
+                skeleton.classList.add('hidden');
+
+                if (!courses || courses.length === 0) {
+                    empty.classList.remove('hidden');
+                    return;
+                }
+
+                const { data: chapterCounts } = await sb
+                    .from('chapters')
+                    .select('course_slug')
+                    .eq('published', true);
+
+                const counts = {};
+                (chapterCounts || []).forEach(c => {
+                    counts[c.course_slug] = (counts[c.course_slug] || 0) + 1;
+                });
+
+                grid.innerHTML = courses.map(course => `
+                    <a href="course.html?slug=${encodeURIComponent(course.slug)}" class="course-card glass-panel border border-white/5 p-6 flex flex-col reveal active">
+                        <div class="w-12 h-12 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center mb-4">
+                            <i data-lucide="${escapeAttr(course.icon || 'code-2')}" class="w-6 h-6 text-green-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">${escapeAttr(course.title)}</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed flex-1 mb-4">${escapeAttr(stripMd(course.description || ''))}</p>
+                        <span class="text-xs font-mono uppercase tracking-widest text-green-500">${counts[course.slug] || 0} Chapters</span>
+                    </a>
+                `).join('');
+
+                grid.classList.remove('hidden');
+                grid.classList.add('grid');
+                if (window.lucide) lucide.createIcons();
+
+            } catch (err) {
+                console.error('Failed to load courses:', err);
+                skeleton.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCourses);
+    </script>
+</body>
+</html>

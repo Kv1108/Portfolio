@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Course | Krishna Viradiya</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="antialiased selection:bg-green-900 selection:text-white" data-page="courses">
+
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 z-[1002] transition-all duration-100 ease-out bg-green-500 w-0"></div>
+
+    <div id="canvas-container">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full z-[1000] glass-panel border-b border-white/5 transition-all duration-300" id="navbar">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html#hero" class="group relative inline-block w-10 h-10 transition-colors">
+                <img src="images/Group 60462 (1).png" alt="KV Logo" class="w-full h-full object-contain group-hover:opacity-0 transition-opacity duration-300"/>
+                <img src="images/Group 60462 (3).png" alt="KV Logo Hover" class="w-full h-full object-contain absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
+            </a>
+
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest text-gray-400">
+                <a href="index.html#about" data-page="home" class="hover:text-white transition-colors nav-link">About</a>
+                <a href="index.html#projects" data-page="home" class="hover:text-white transition-colors nav-link">Projects</a>
+                <a href="index.html#experience" data-page="home" class="hover:text-white transition-colors nav-link">Experience</a>
+                <a href="blogs.html" data-page="blogs" class="hover:text-white transition-colors nav-link">Blogs</a>
+                <a href="courses.html" data-page="courses" class="hover:text-white transition-colors nav-link">Courses</a>
+                <a href="index.html#contact" data-page="home" class="hover:text-white transition-colors nav-link">Contact</a>
+            </div>
+
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 md:hidden flex flex-col items-center py-8 space-y-6 text-lg font-medium text-gray-300 uppercase">
+            <a href="index.html#about" data-page="home" class="mobile-link">About</a>
+            <a href="index.html#projects" data-page="home" class="mobile-link">Projects</a>
+            <a href="index.html#experience" data-page="home" class="mobile-link">Experience</a>
+            <a href="blogs.html" data-page="blogs" class="mobile-link">Blogs</a>
+            <a href="courses.html" data-page="courses" class="mobile-link">Courses</a>
+            <a href="index.html#contact" data-page="home" class="mobile-link">Contact</a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+
+        <div id="course-loading" class="max-w-3xl mx-auto px-6 py-16 space-y-4">
+            <div class="skeleton h-4 w-1/4"></div>
+            <div class="skeleton h-10 w-3/4"></div>
+            <div class="skeleton h-40 w-full mt-6"></div>
+        </div>
+
+        <div id="course-error" class="hidden max-w-3xl mx-auto px-6 py-20 text-center">
+            <i data-lucide="alert-triangle" class="w-10 h-10 text-red-500 mx-auto mb-4"></i>
+            <p class="text-gray-500">Couldn't find that course.</p>
+            <a href="courses.html" class="text-green-400 underline text-sm mt-4 inline-block">Back to Courses</a>
+        </div>
+
+        <div id="course-content" class="hidden max-w-6xl mx-auto px-6 py-12">
+            <a href="courses.html" class="inline-flex items-center text-gray-400 hover:text-white text-sm uppercase tracking-widest mb-8 transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> All Courses
+            </a>
+
+            <div class="mb-10">
+                <span class="section-tag" id="course-eyebrow">Course</span>
+                <h1 id="course-title" class="text-3xl md:text-5xl font-bold text-white mb-3"></h1>
+                <p id="course-description" class="text-gray-400 max-w-2xl"></p>
+            </div>
+
+            <div class="grid md:grid-cols-[280px_1fr] gap-8">
+                <!-- Chapter sidebar -->
+                <aside class="glass-panel rounded-2xl p-4 md:sticky md:top-28 self-start max-h-[70vh] overflow-y-auto">
+                    <h3 class="font-mono text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Chapters</h3>
+                    <div id="chapter-list" class="space-y-1"></div>
+                </aside>
+
+                <!-- Chapter content -->
+                <div>
+                    <div id="chapter-empty" class="hidden glass-panel rounded-2xl p-10 text-center">
+                        <i data-lucide="book-open" class="w-8 h-8 text-gray-600 mx-auto mb-3"></i>
+                        <p class="text-gray-500">No chapters published yet for this course.</p>
+                    </div>
+                    <div id="chapter-content" class="hidden glass-panel rounded-2xl p-8">
+                        <span id="chapter-eyebrow" class="font-mono text-xs text-green-500 uppercase tracking-widest"></span>
+                        <h2 id="chapter-title" class="text-2xl md:text-3xl font-bold text-white mt-2 mb-6"></h2>
+                        <div id="chapter-body" class="prose-article"></div>
+
+                        <div class="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
+                            <button id="prev-chapter-btn" class="admin-btn-secondary text-sm hidden">
+                                <i data-lucide="arrow-left" class="w-4 h-4 inline mr-1"></i> Previous
+                            </button>
+                            <div class="flex-1"></div>
+                            <button id="next-chapter-btn" class="admin-btn-secondary text-sm hidden">
+                                Next <i data-lucide="arrow-right" class="w-4 h-4 inline ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 bg-gray-900 border-t border-gray-800 text-center mt-12">
+        <p class="text-gray-600 text-xs tracking-widest font-mono uppercase">&copy; <span id="year"></span> Krishna Viradiya.</p>
+    </footer>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="assets/site.js"></script>
+    <script>
+        let allChapters = [];
+        let activeChapterIndex = 0;
+        let courseSlug = null;
+
+        async function loadCourse() {
+            const params = new URLSearchParams(window.location.search);
+            courseSlug = params.get('slug');
+            const loadingEl = document.getElementById('course-loading');
+            const errorEl = document.getElementById('course-error');
+            const contentEl = document.getElementById('course-content');
+            const sb = getSupabase();
+
+            if (!courseSlug || !sb) {
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                const { data: course, error: courseErr } = await sb
+                    .from('courses')
+                    .select('title, description, language')
+                    .eq('slug', courseSlug)
+                    .eq('published', true)
+                    .single();
+
+                if (courseErr || !course) throw courseErr || new Error('Course not found');
+
+                document.getElementById('page-title').textContent = course.title + ' | Krishna Viradiya';
+                document.getElementById('course-eyebrow').textContent = course.language || 'Course';
+                document.getElementById('course-title').textContent = course.title;
+                document.getElementById('course-description').innerHTML = inlineMd(course.description || '');
+
+                const { data: chapters, error: chErr } = await sb
+                    .from('chapters')
+                    .select('id, title, body, sort_order')
+                    .eq('course_slug', courseSlug)
+                    .eq('published', true)
+                    .order('sort_order', { ascending: true });
+
+                if (chErr) throw chErr;
+                allChapters = chapters || [];
+
+                loadingEl.classList.add('hidden');
+                contentEl.classList.remove('hidden');
+
+                renderChapterList();
+                if (allChapters.length > 0) {
+                    showChapter(0);
+                } else {
+                    document.getElementById('chapter-empty').classList.remove('hidden');
+                }
+                if (window.lucide) lucide.createIcons();
+
+            } catch (err) {
+                console.error('Failed to load course:', err);
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        function renderChapterList() {
+            const list = document.getElementById('chapter-list');
+            list.innerHTML = allChapters.map((ch, i) => `
+                <div class="chapter-list-item" data-index="${i}" onclick="showChapter(${i})">
+                    <span class="chapter-number">${String(i + 1).padStart(2, '0')}</span>
+                    <span class="chapter-title">${escapeAttr(ch.title)}</span>
+                </div>
+            `).join('');
+        }
+
+        function showChapter(index) {
+            if (index < 0 || index >= allChapters.length) return;
+            activeChapterIndex = index;
+            const ch = allChapters[index];
+
+            document.getElementById('chapter-empty').classList.add('hidden');
+            document.getElementById('chapter-content').classList.remove('hidden');
+            document.getElementById('chapter-eyebrow').textContent = `Chapter ${index + 1} of ${allChapters.length}`;
+            document.getElementById('chapter-title').textContent = ch.title;
+            document.getElementById('chapter-body').innerHTML = renderRichText(ch.body);
+            highlightCodeBlocks(document.getElementById('chapter-body'));
+
+            document.querySelectorAll('.chapter-list-item').forEach(el => {
+                el.classList.toggle('is-active', parseInt(el.dataset.index) === index);
+            });
+
+            const prevBtn = document.getElementById('prev-chapter-btn');
+            const nextBtn = document.getElementById('next-chapter-btn');
+            prevBtn.classList.toggle('hidden', index === 0);
+            nextBtn.classList.toggle('hidden', index === allChapters.length - 1);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCourse();
+            document.getElementById('prev-chapter-btn').addEventListener('click', () => showChapter(activeChapterIndex - 1));
+            document.getElementById('next-chapter-btn').addEventListener('click', () => showChapter(activeChapterIndex + 1));
+        });
+    </script>
+</body>
+</html>

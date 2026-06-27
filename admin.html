@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin | Krishna Viradiya</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="antialiased" data-page="admin">
+
+    <div id="canvas-container">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <!-- ============ LOGIN GATE ============ -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center px-6">
+        <div class="glass-panel rounded-2xl p-8 w-full max-w-sm">
+            <div class="flex items-center gap-2 mb-6">
+                <i data-lucide="lock" class="w-5 h-5 text-green-500"></i>
+                <h1 class="text-xl font-bold text-white">Admin Access</h1>
+            </div>
+            <label class="admin-label">Password</label>
+            <input id="login-password" type="password" class="admin-input mb-2" placeholder="••••••••" onkeydown="if(event.key==='Enter') attemptLogin()">
+            <p id="login-error" class="text-red-400 text-sm mb-4 hidden">Incorrect password.</p>
+            <button onclick="attemptLogin()" class="admin-btn-primary w-full mt-2">Unlock</button>
+        </div>
+    </div>
+
+    <!-- ============ DASHBOARD ============ -->
+    <div id="dashboard-screen" class="hidden min-h-screen pb-20">
+        <header class="border-b border-white/10 px-6 py-5 flex items-center justify-between sticky top-0 z-50 glass-panel">
+            <div class="flex items-center gap-3">
+                <i data-lucide="layout-dashboard" class="w-5 h-5 text-green-500"></i>
+                <h1 class="text-lg font-bold text-white">Content Dashboard</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+                    <i data-lucide="external-link" class="w-4 h-4"></i> View Site
+                </a>
+                <button onclick="logout()" class="text-sm text-gray-400 hover:text-white transition-colors">Log out</button>
+            </div>
+        </header>
+
+        <div class="max-w-5xl mx-auto px-6 py-8">
+
+            <!-- Tabs -->
+            <div class="flex gap-2 mb-8 border-b border-white/10">
+                <button class="admin-tab-btn px-4 py-3 text-sm font-bold uppercase tracking-wider text-white border-b-2 border-green-500" data-tab="blogs" onclick="switchTab('blogs')">Blogs</button>
+                <button class="admin-tab-btn px-4 py-3 text-sm font-bold uppercase tracking-wider text-gray-500 border-b-2 border-transparent" data-tab="courses" onclick="switchTab('courses')">Courses</button>
+            </div>
+
+            <!-- ===== BLOGS TAB ===== -->
+            <div id="tab-blogs">
+                <div id="blog-list-view">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-white">Posts</h2>
+                        <button onclick="newBlogPost()" class="admin-btn-primary text-sm flex items-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i> New Post
+                        </button>
+                    </div>
+                    <div id="admin-blog-list"></div>
+                    <p id="admin-blog-empty" class="hidden text-gray-500 text-center py-10">No posts yet. Click "New Post" to write your first one.</p>
+                </div>
+
+                <div id="blog-edit-view" class="hidden">
+                    <button onclick="closeBlogEditor()" class="inline-flex items-center text-gray-400 hover:text-white text-sm uppercase tracking-widest mb-6">
+                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Posts
+                    </button>
+
+                    <input type="hidden" id="blog-edit-id">
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="admin-label">Title</label>
+                            <input id="blog-title" class="admin-input" placeholder="e.g. Why I built a real-time speaker diarizer" oninput="autoSlug()">
+                        </div>
+                        <div>
+                            <label class="admin-label">URL slug (auto-generated, editable)</label>
+                            <input id="blog-slug" class="admin-input" placeholder="why-i-built-a-real-time-diarizer">
+                        </div>
+                        <div>
+                            <label class="admin-label">Cover image URL <span class="text-gray-600">(optional — paste any image link)</span></label>
+                            <input id="blog-cover" class="admin-input" placeholder="https://...">
+                        </div>
+                        <div>
+                            <label class="admin-label">Short summary <span class="text-gray-600">(shown on the blog list card)</span></label>
+                            <textarea id="blog-summary" rows="2" class="admin-textarea" style="font-family: 'Montserrat', sans-serif;" placeholder="One or two sentences that make someone want to click."></textarea>
+                        </div>
+                        <div>
+                            <label class="admin-label">
+                                Body
+                                <span class="text-gray-600 normal-case font-sans">— supports <code class="text-green-500">## heading</code>, <code class="text-green-500">**bold**</code>, <code class="text-green-500">`code`</code>, <code class="text-green-500">```language ... ```</code> code blocks, <code class="text-green-500">![alt](url)</code> images, <code class="text-green-500">- list</code> items, and links</span>
+                            </label>
+                            <textarea id="blog-body" rows="16" class="admin-textarea" placeholder="Write your post here using simple markdown..."></textarea>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-2">
+                            <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                                <input type="checkbox" id="blog-published" class="w-4 h-4 accent-green-500"> Published (visible on the live site)
+                            </label>
+                        </div>
+
+                        <div class="flex gap-3 pt-4 border-t border-white/10">
+                            <button onclick="saveBlogPost()" id="blog-save-btn" class="admin-btn-primary flex items-center gap-2">
+                                <i data-lucide="save" class="w-4 h-4"></i> Save Post
+                            </button>
+                            <button onclick="previewBlogPost()" class="admin-btn-secondary text-sm">Preview</button>
+                            <button onclick="deleteBlogPost()" id="blog-delete-btn" class="admin-btn-secondary text-sm text-red-400 border-red-400/30 hover:border-red-400 ml-auto hidden">Delete Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== COURSES TAB ===== -->
+            <div id="tab-courses" class="hidden">
+                <div id="course-list-view">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-white">Courses</h2>
+                        <button onclick="newCourse()" class="admin-btn-primary text-sm flex items-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i> New Course
+                        </button>
+                    </div>
+                    <div id="admin-course-list"></div>
+                    <p id="admin-course-empty" class="hidden text-gray-500 text-center py-10">No courses yet. Click "New Course" — e.g. "Python Basics" or "C from Scratch".</p>
+                </div>
+
+                <!-- Course editor (metadata + chapter list) -->
+                <div id="course-edit-view" class="hidden">
+                    <button onclick="closeCourseEditor()" class="inline-flex items-center text-gray-400 hover:text-white text-sm uppercase tracking-widest mb-6">
+                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Courses
+                    </button>
+
+                    <input type="hidden" id="course-edit-slug-original">
+
+                    <div class="space-y-5 mb-10">
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="admin-label">Course title</label>
+                                <input id="course-title" class="admin-input" placeholder="e.g. Python Basics" oninput="autoCourseSlug()">
+                            </div>
+                            <div>
+                                <label class="admin-label">URL slug</label>
+                                <input id="course-slug" class="admin-input" placeholder="python-basics">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="admin-label">Description</label>
+                            <textarea id="course-description" rows="2" class="admin-textarea" style="font-family: 'Montserrat', sans-serif;" placeholder="What will someone learn in this course?"></textarea>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="admin-label">Language tag <span class="text-gray-600">(shown as eyebrow text)</span></label>
+                                <input id="course-language" class="admin-input" placeholder="Python">
+                            </div>
+                            <div>
+                                <label class="admin-label">Icon <span class="text-gray-600">(any <a href="https://lucide.dev/icons" target="_blank" class="text-green-500 underline">lucide.dev</a> icon name)</span></label>
+                                <input id="course-icon" class="admin-input" placeholder="code-2">
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                                <input type="checkbox" id="course-published" class="w-4 h-4 accent-green-500"> Published
+                            </label>
+                        </div>
+                        <div class="flex gap-3 pt-4 border-t border-white/10">
+                            <button onclick="saveCourse()" class="admin-btn-primary flex items-center gap-2">
+                                <i data-lucide="save" class="w-4 h-4"></i> Save Course Info
+                            </button>
+                            <button onclick="deleteCourse()" id="course-delete-btn" class="admin-btn-secondary text-sm text-red-400 border-red-400/30 hover:border-red-400 ml-auto hidden">Delete Course</button>
+                        </div>
+                    </div>
+
+                    <!-- Chapters within this course -->
+                    <div id="chapters-section" class="hidden border-t border-white/10 pt-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-white">Chapters</h3>
+                            <button onclick="newChapter()" class="admin-btn-primary text-sm flex items-center gap-2">
+                                <i data-lucide="plus" class="w-4 h-4"></i> New Chapter
+                            </button>
+                        </div>
+                        <div id="admin-chapter-list"></div>
+                        <p id="admin-chapter-empty" class="hidden text-gray-500 text-center py-8">No chapters yet. Add your first one above.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter editor -->
+                <div id="chapter-edit-view" class="hidden">
+                    <button onclick="closeChapterEditor()" class="inline-flex items-center text-gray-400 hover:text-white text-sm uppercase tracking-widest mb-6">
+                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Course
+                    </button>
+
+                    <input type="hidden" id="chapter-edit-id">
+
+                    <div class="space-y-5">
+                        <div class="grid md:grid-cols-[1fr_140px] gap-5">
+                            <div>
+                                <label class="admin-label">Chapter title</label>
+                                <input id="chapter-title" class="admin-input" placeholder="e.g. Variables and Data Types">
+                            </div>
+                            <div>
+                                <label class="admin-label">Order</label>
+                                <input id="chapter-order" type="number" class="admin-input" placeholder="1">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="admin-label">
+                                Content
+                                <span class="text-gray-600 normal-case font-sans">— wrap code in <code class="text-green-500">```python ... ```</code> (or any language) for a formatted, copyable code block</span>
+                            </label>
+                            <textarea id="chapter-body" rows="18" class="admin-textarea" placeholder="Explain the concept, then drop in a code snippet:&#10;&#10;```python&#10;print('hello world')&#10;```"></textarea>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                                <input type="checkbox" id="chapter-published" class="w-4 h-4 accent-green-500"> Published
+                            </label>
+                        </div>
+                        <div class="flex gap-3 pt-4 border-t border-white/10">
+                            <button onclick="saveChapter()" class="admin-btn-primary flex items-center gap-2">
+                                <i data-lucide="save" class="w-4 h-4"></i> Save Chapter
+                            </button>
+                            <button onclick="deleteChapter()" id="chapter-delete-btn" class="admin-btn-secondary text-sm text-red-400 border-red-400/30 hover:border-red-400 ml-auto hidden">Delete Chapter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="toast" class="toast-fixed"></div>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="assets/site.js"></script>
+    <script>
+        /* =========================================================
+           AUTH
+           This uses Supabase email/password sign-in behind the scenes,
+           but presents as a single password to keep it simple for you.
+           See SETUP.md for the one-time account creation step.
+           ========================================================= */
+        const ADMIN_EMAIL = "krishnaviradiya1108@gmail.com"; // set in SETUP.md step
+
+        async function attemptLogin() {
+            const password = document.getElementById('login-password').value;
+            const sb = getSupabase();
+            const errorEl = document.getElementById('login-error');
+            if (!sb) { showToast('Backend not configured yet.', 'error'); return; }
+
+            const { data, error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
+            if (error) {
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            errorEl.classList.add('hidden');
+            showDashboard();
+        }
+
+        async function logout() {
+            const sb = getSupabase();
+            if (sb) await sb.auth.signOut();
+            document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('login-password').value = '';
+        }
+
+        function showDashboard() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard-screen').classList.remove('hidden');
+            if (window.lucide) lucide.createIcons();
+            loadBlogList();
+            loadCourseList();
+        }
+
+        async function checkExistingSession() {
+            const sb = getSupabase();
+            if (!sb) return;
+            const { data } = await sb.auth.getSession();
+            if (data && data.session) showDashboard();
+        }
+
+        /* =========================================================
+           TABS
+           ========================================================= */
+        function switchTab(tab) {
+            document.getElementById('tab-blogs').classList.toggle('hidden', tab !== 'blogs');
+            document.getElementById('tab-courses').classList.toggle('hidden', tab !== 'courses');
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                const active = btn.dataset.tab === tab;
+                btn.classList.toggle('text-white', active);
+                btn.classList.toggle('border-green-500', active);
+                btn.classList.toggle('text-gray-500', !active);
+                btn.classList.toggle('border-transparent', !active);
+            });
+        }
+
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast-fixed show ' + type;
+            setTimeout(() => { toast.classList.remove('show'); }, 2800);
+        }
+
+        function slugify(str) {
+            return (str || '').toLowerCase().trim()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+        }
+
+        /* =========================================================
+           BLOGS
+           ========================================================= */
+        async function loadBlogList() {
+            const sb = getSupabase();
+            const listEl = document.getElementById('admin-blog-list');
+            const emptyEl = document.getElementById('admin-blog-empty');
+            const { data, error } = await sb.from('posts').select('id, slug, title, published, published_at').order('published_at', { ascending: false });
+            if (error) { showToast('Could not load posts.', 'error'); return; }
+
+            if (!data || data.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+            emptyEl.classList.add('hidden');
+            listEl.innerHTML = data.map(post => `
+                <div class="admin-row">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <span class="w-2 h-2 rounded-full ${post.published ? 'bg-green-500' : 'bg-gray-600'} flex-shrink-0"></span>
+                        <span class="text-white font-medium truncate">${escapeAttr(post.title)}</span>
+                    </div>
+                    <button onclick="editBlogPost('${post.id}')" class="admin-btn-secondary text-xs flex-shrink-0">Edit</button>
+                </div>
+            `).join('');
+        }
+
+        function newBlogPost() {
+            document.getElementById('blog-edit-id').value = '';
+            document.getElementById('blog-title').value = '';
+            document.getElementById('blog-slug').value = '';
+            document.getElementById('blog-cover').value = '';
+            document.getElementById('blog-summary').value = '';
+            document.getElementById('blog-body').value = '';
+            document.getElementById('blog-published').checked = false;
+            document.getElementById('blog-delete-btn').classList.add('hidden');
+            document.getElementById('blog-list-view').classList.add('hidden');
+            document.getElementById('blog-edit-view').classList.remove('hidden');
+        }
+
+        async function editBlogPost(id) {
+            const sb = getSupabase();
+            const { data, error } = await sb.from('posts').select('*').eq('id', id).single();
+            if (error || !data) { showToast('Could not load post.', 'error'); return; }
+
+            document.getElementById('blog-edit-id').value = data.id;
+            document.getElementById('blog-title').value = data.title || '';
+            document.getElementById('blog-slug').value = data.slug || '';
+            document.getElementById('blog-cover').value = data.cover_image_url || '';
+            document.getElementById('blog-summary').value = data.summary || '';
+            document.getElementById('blog-body').value = data.body || '';
+            document.getElementById('blog-published').checked = !!data.published;
+            document.getElementById('blog-delete-btn').classList.remove('hidden');
+            document.getElementById('blog-list-view').classList.add('hidden');
+            document.getElementById('blog-edit-view').classList.remove('hidden');
+        }
+
+        function closeBlogEditor() {
+            document.getElementById('blog-edit-view').classList.add('hidden');
+            document.getElementById('blog-list-view').classList.remove('hidden');
+            loadBlogList();
+        }
+
+        function autoSlug() {
+            const slugField = document.getElementById('blog-slug');
+            if (!document.getElementById('blog-edit-id').value) {
+                slugField.value = slugify(document.getElementById('blog-title').value);
+            }
+        }
+
+        async function saveBlogPost() {
+            const sb = getSupabase();
+            const id = document.getElementById('blog-edit-id').value;
+            const title = document.getElementById('blog-title').value.trim();
+            const slug = slugify(document.getElementById('blog-slug').value || title);
+
+            if (!title || !slug) { showToast('Title is required.', 'error'); return; }
+
+            const payload = {
+                title,
+                slug,
+                cover_image_url: document.getElementById('blog-cover').value.trim() || null,
+                summary: document.getElementById('blog-summary').value.trim(),
+                body: document.getElementById('blog-body').value,
+                published: document.getElementById('blog-published').checked,
+                published_at: new Date().toISOString()
+            };
+
+            const btn = document.getElementById('blog-save-btn');
+            btn.disabled = true;
+
+            try {
+                let error;
+                if (id) {
+                    ({ error } = await sb.from('posts').update(payload).eq('id', id));
+                } else {
+                    ({ error } = await sb.from('posts').insert(payload));
+                }
+                if (error) throw error;
+                showToast('Post saved.', 'success');
+                closeBlogEditor();
+            } catch (err) {
+                console.error(err);
+                showToast(err.message && err.message.includes('duplicate') ? 'That slug is already used by another post.' : 'Save failed.', 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function previewBlogPost() {
+            const slug = document.getElementById('blog-slug').value.trim();
+            if (!slug) { showToast('Add a slug first, then save, to preview.', 'error'); return; }
+            window.open(`blog-post.html?slug=${encodeURIComponent(slug)}`, '_blank');
+        }
+
+        async function deleteBlogPost() {
+            const id = document.getElementById('blog-edit-id').value;
+            if (!id) return;
+            if (!confirm('Delete this post permanently? This cannot be undone.')) return;
+            const sb = getSupabase();
+            const { error } = await sb.from('posts').delete().eq('id', id);
+            if (error) { showToast('Delete failed.', 'error'); return; }
+            showToast('Post deleted.', 'success');
+            closeBlogEditor();
+        }
+
+        /* =========================================================
+           COURSES
+           ========================================================= */
+        async function loadCourseList() {
+            const sb = getSupabase();
+            const listEl = document.getElementById('admin-course-list');
+            const emptyEl = document.getElementById('admin-course-empty');
+            const { data, error } = await sb.from('courses').select('slug, title, published').order('sort_order', { ascending: true });
+            if (error) { showToast('Could not load courses.', 'error'); return; }
+
+            if (!data || data.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+            emptyEl.classList.add('hidden');
+            listEl.innerHTML = data.map(course => `
+                <div class="admin-row">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <span class="w-2 h-2 rounded-full ${course.published ? 'bg-green-500' : 'bg-gray-600'} flex-shrink-0"></span>
+                        <span class="text-white font-medium truncate">${escapeAttr(course.title)}</span>
+                    </div>
+                    <button onclick="editCourse('${course.slug}')" class="admin-btn-secondary text-xs flex-shrink-0">Edit</button>
+                </div>
+            `).join('');
+        }
+
+        function newCourse() {
+            document.getElementById('course-edit-slug-original').value = '';
+            document.getElementById('course-title').value = '';
+            document.getElementById('course-slug').value = '';
+            document.getElementById('course-description').value = '';
+            document.getElementById('course-language').value = '';
+            document.getElementById('course-icon').value = 'code-2';
+            document.getElementById('course-published').checked = false;
+            document.getElementById('course-delete-btn').classList.add('hidden');
+            document.getElementById('chapters-section').classList.add('hidden');
+            document.getElementById('course-list-view').classList.add('hidden');
+            document.getElementById('course-edit-view').classList.remove('hidden');
+        }
+
+        async function editCourse(slug) {
+            const sb = getSupabase();
+            const { data, error } = await sb.from('courses').select('*').eq('slug', slug).single();
+            if (error || !data) { showToast('Could not load course.', 'error'); return; }
+
+            document.getElementById('course-edit-slug-original').value = data.slug;
+            document.getElementById('course-title').value = data.title || '';
+            document.getElementById('course-slug').value = data.slug || '';
+            document.getElementById('course-description').value = data.description || '';
+            document.getElementById('course-language').value = data.language || '';
+            document.getElementById('course-icon').value = data.icon || 'code-2';
+            document.getElementById('course-published').checked = !!data.published;
+            document.getElementById('course-delete-btn').classList.remove('hidden');
+            document.getElementById('chapters-section').classList.remove('hidden');
+            document.getElementById('course-list-view').classList.add('hidden');
+            document.getElementById('course-edit-view').classList.remove('hidden');
+            loadChapterList(slug);
+        }
+
+        function closeCourseEditor() {
+            document.getElementById('course-edit-view').classList.add('hidden');
+            document.getElementById('course-list-view').classList.remove('hidden');
+            loadCourseList();
+        }
+
+        function autoCourseSlug() {
+            const slugField = document.getElementById('course-slug');
+            if (!document.getElementById('course-edit-slug-original').value) {
+                slugField.value = slugify(document.getElementById('course-title').value);
+            }
+        }
+
+        async function saveCourse() {
+            const sb = getSupabase();
+            const originalSlug = document.getElementById('course-edit-slug-original').value;
+            const title = document.getElementById('course-title').value.trim();
+            const slug = slugify(document.getElementById('course-slug').value || title);
+
+            if (!title || !slug) { showToast('Title is required.', 'error'); return; }
+
+            const payload = {
+                title,
+                slug,
+                description: document.getElementById('course-description').value.trim(),
+                language: document.getElementById('course-language').value.trim(),
+                icon: document.getElementById('course-icon').value.trim() || 'code-2',
+                published: document.getElementById('course-published').checked
+            };
+
+            try {
+                let error;
+                if (originalSlug) {
+                    ({ error } = await sb.from('courses').update(payload).eq('slug', originalSlug));
+                    if (!error && slug !== originalSlug) {
+                        // keep chapters linked if the slug changed
+                        await sb.from('chapters').update({ course_slug: slug }).eq('course_slug', originalSlug);
+                    }
+                } else {
+                    const { data: maxRow } = await sb.from('courses').select('sort_order').order('sort_order', { ascending: false }).limit(1);
+                    payload.sort_order = (maxRow && maxRow[0] ? maxRow[0].sort_order : 0) + 1;
+                    ({ error } = await sb.from('courses').insert(payload));
+                }
+                if (error) throw error;
+                showToast('Course saved.', 'success');
+                document.getElementById('course-edit-slug-original').value = slug;
+                document.getElementById('chapters-section').classList.remove('hidden');
+                loadChapterList(slug);
+            } catch (err) {
+                console.error(err);
+                showToast(err.message && err.message.includes('duplicate') ? 'That slug is already in use.' : 'Save failed.', 'error');
+            }
+        }
+
+        async function deleteCourse() {
+            const slug = document.getElementById('course-edit-slug-original').value;
+            if (!slug) return;
+            if (!confirm('Delete this course and ALL its chapters permanently?')) return;
+            const sb = getSupabase();
+            await sb.from('chapters').delete().eq('course_slug', slug);
+            const { error } = await sb.from('courses').delete().eq('slug', slug);
+            if (error) { showToast('Delete failed.', 'error'); return; }
+            showToast('Course deleted.', 'success');
+            closeCourseEditor();
+        }
+
+        /* =========================================================
+           CHAPTERS
+           ========================================================= */
+        let currentCourseSlugForChapters = null;
+
+        async function loadChapterList(courseSlug) {
+            currentCourseSlugForChapters = courseSlug;
+            const sb = getSupabase();
+            const listEl = document.getElementById('admin-chapter-list');
+            const emptyEl = document.getElementById('admin-chapter-empty');
+            const { data, error } = await sb.from('chapters').select('id, title, published, sort_order').eq('course_slug', courseSlug).order('sort_order', { ascending: true });
+            if (error) { showToast('Could not load chapters.', 'error'); return; }
+
+            if (!data || data.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+            emptyEl.classList.add('hidden');
+            listEl.innerHTML = data.map(ch => `
+                <div class="admin-row">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <span class="chapter-number">${String(ch.sort_order).padStart(2, '0')}</span>
+                        <span class="w-2 h-2 rounded-full ${ch.published ? 'bg-green-500' : 'bg-gray-600'} flex-shrink-0"></span>
+                        <span class="text-white font-medium truncate">${escapeAttr(ch.title)}</span>
+                    </div>
+                    <button onclick="editChapter('${ch.id}')" class="admin-btn-secondary text-xs flex-shrink-0">Edit</button>
+                </div>
+            `).join('');
+        }
+
+        async function newChapter() {
+            const sb = getSupabase();
+            const { data: maxRow } = await sb.from('chapters').select('sort_order').eq('course_slug', currentCourseSlugForChapters).order('sort_order', { ascending: false }).limit(1);
+            const nextOrder = (maxRow && maxRow[0] ? maxRow[0].sort_order : 0) + 1;
+
+            document.getElementById('chapter-edit-id').value = '';
+            document.getElementById('chapter-title').value = '';
+            document.getElementById('chapter-order').value = nextOrder;
+            document.getElementById('chapter-body').value = '';
+            document.getElementById('chapter-published').checked = false;
+            document.getElementById('chapter-delete-btn').classList.add('hidden');
+            document.getElementById('course-edit-view').classList.add('hidden');
+            document.getElementById('chapter-edit-view').classList.remove('hidden');
+        }
+
+        async function editChapter(id) {
+            const sb = getSupabase();
+            const { data, error } = await sb.from('chapters').select('*').eq('id', id).single();
+            if (error || !data) { showToast('Could not load chapter.', 'error'); return; }
+
+            document.getElementById('chapter-edit-id').value = data.id;
+            document.getElementById('chapter-title').value = data.title || '';
+            document.getElementById('chapter-order').value = data.sort_order || 1;
+            document.getElementById('chapter-body').value = data.body || '';
+            document.getElementById('chapter-published').checked = !!data.published;
+            document.getElementById('chapter-delete-btn').classList.remove('hidden');
+            document.getElementById('course-edit-view').classList.add('hidden');
+            document.getElementById('chapter-edit-view').classList.remove('hidden');
+        }
+
+        function closeChapterEditor() {
+            document.getElementById('chapter-edit-view').classList.add('hidden');
+            document.getElementById('course-edit-view').classList.remove('hidden');
+            loadChapterList(currentCourseSlugForChapters);
+        }
+
+        async function saveChapter() {
+            const sb = getSupabase();
+            const id = document.getElementById('chapter-edit-id').value;
+            const title = document.getElementById('chapter-title').value.trim();
+            if (!title) { showToast('Chapter title is required.', 'error'); return; }
+
+            const payload = {
+                course_slug: currentCourseSlugForChapters,
+                title,
+                sort_order: parseInt(document.getElementById('chapter-order').value) || 1,
+                body: document.getElementById('chapter-body').value,
+                published: document.getElementById('chapter-published').checked
+            };
+
+            try {
+                let error;
+                if (id) {
+                    ({ error } = await sb.from('chapters').update(payload).eq('id', id));
+                } else {
+                    ({ error } = await sb.from('chapters').insert(payload));
+                }
+                if (error) throw error;
+                showToast('Chapter saved.', 'success');
+                closeChapterEditor();
+            } catch (err) {
+                console.error(err);
+                showToast('Save failed.', 'error');
+            }
+        }
+
+        async function deleteChapter() {
+            const id = document.getElementById('chapter-edit-id').value;
+            if (!id) return;
+            if (!confirm('Delete this chapter permanently?')) return;
+            const sb = getSupabase();
+            const { error } = await sb.from('chapters').delete().eq('id', id);
+            if (error) { showToast('Delete failed.', 'error'); return; }
+            showToast('Chapter deleted.', 'success');
+            closeChapterEditor();
+        }
+
+        document.addEventListener('DOMContentLoaded', checkExistingSession);
+    </script>
+</body>
+</html>
