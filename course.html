@@ -33,6 +33,7 @@
                 <a href="index.html#experience" data-page="home" class="hover:text-white transition-colors nav-link">Experience</a>
                 <a href="blogs.html" data-page="blogs" class="hover:text-white transition-colors nav-link">Blogs</a>
                 <a href="courses.html" data-page="courses" class="hover:text-white transition-colors nav-link">Courses</a>
+                <a href="books.html" data-page="books" class="hover:text-white transition-colors nav-link">Books</a>
                 <a href="index.html#contact" data-page="home" class="hover:text-white transition-colors nav-link">Contact</a>
             </div>
 
@@ -47,6 +48,7 @@
             <a href="index.html#experience" data-page="home" class="mobile-link">Experience</a>
             <a href="blogs.html" data-page="blogs" class="mobile-link">Blogs</a>
             <a href="courses.html" data-page="courses" class="mobile-link">Courses</a>
+            <a href="books.html" data-page="books" class="mobile-link">Books</a>
             <a href="index.html#contact" data-page="home" class="mobile-link">Contact</a>
         </div>
     </header>
@@ -72,39 +74,17 @@
 
             <div class="mb-10">
                 <span class="section-tag" id="course-eyebrow">Course</span>
-                <h1 id="course-title" class="text-3xl md:text-5xl font-bold text-white mb-3"></h1>
-                <p id="course-description" class="text-gray-400 max-w-2xl"></p>
+                <h1 id="course-title" class="text-3xl md:text-5xl font-bold text-white mb-3 text-center"></h1>
+                <p id="course-description" class="text-gray-400 max-w-2xl mx-auto text-center"></p>
             </div>
 
-            <div class="grid md:grid-cols-[280px_1fr] gap-8">
-                <!-- Chapter sidebar -->
-                <aside class="glass-panel rounded-2xl p-4 md:sticky md:top-28 self-start max-h-[70vh] overflow-y-auto">
-                    <h3 class="font-mono text-xs uppercase tracking-widest text-gray-500 px-2 mb-2">Chapters</h3>
-                    <div id="chapter-list" class="space-y-1"></div>
-                </aside>
-
-                <!-- Chapter content -->
-                <div>
-                    <div id="chapter-empty" class="hidden glass-panel rounded-2xl p-10 text-center">
-                        <i data-lucide="book-open" class="w-8 h-8 text-gray-600 mx-auto mb-3"></i>
-                        <p class="text-gray-500">No chapters published yet for this course.</p>
-                    </div>
-                    <div id="chapter-content" class="hidden glass-panel rounded-2xl p-8">
-                        <span id="chapter-eyebrow" class="font-mono text-xs text-green-500 uppercase tracking-widest"></span>
-                        <h2 id="chapter-title" class="text-2xl md:text-3xl font-bold text-white mt-2 mb-6"></h2>
-                        <div id="chapter-body" class="prose-article"></div>
-
-                        <div class="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
-                            <button id="prev-chapter-btn" class="admin-btn-secondary text-sm hidden">
-                                <i data-lucide="arrow-left" class="w-4 h-4 inline mr-1"></i> Previous
-                            </button>
-                            <div class="flex-1"></div>
-                            <button id="next-chapter-btn" class="admin-btn-secondary text-sm hidden">
-                                Next <i data-lucide="arrow-right" class="w-4 h-4 inline ml-1"></i>
-                            </button>
-                        </div>
-                    </div>
+            <!-- Chapter list (shown before a chapter is opened) -->
+            <div id="chapter-list-screen">
+                <div id="chapter-empty" class="hidden glass-panel rounded-2xl p-10 text-center max-w-2xl mx-auto">
+                    <i data-lucide="book-open" class="w-8 h-8 text-gray-600 mx-auto mb-3"></i>
+                    <p class="text-gray-500">No chapters published yet for this course.</p>
                 </div>
+                <div id="chapter-list" class="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto"></div>
             </div>
         </div>
     </main>
@@ -113,6 +93,33 @@
         <p class="text-gray-600 text-xs tracking-widest font-mono uppercase">&copy; <span id="year"></span> Krishna Viradiya.</p>
     </footer>
 
+    <!-- Full-screen chapter reading mode -->
+    <div id="chapter-reader" class="hidden fixed inset-0 z-[1100] bg-[#0a0a0a] overflow-y-auto">
+        <div class="max-w-3xl mx-auto px-6 py-10">
+            <div class="flex items-center justify-between mb-8">
+                <button id="back-to-chapters-btn" class="inline-flex items-center text-gray-400 hover:text-white text-sm uppercase tracking-widest transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Chapters
+                </button>
+                <button id="close-reader-btn" class="text-gray-400 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <span id="chapter-eyebrow" class="font-mono text-xs text-green-500 uppercase tracking-widest block text-center"></span>
+            <h2 id="chapter-title" class="text-2xl md:text-4xl font-bold text-white mt-2 mb-10 text-center"></h2>
+            <div id="chapter-body" class="prose-article"></div>
+
+            <div class="flex justify-between items-center mt-12 pt-6 border-t border-white/10 pb-10">
+                <button id="prev-chapter-btn" class="admin-btn-secondary text-sm hidden">
+                    <i data-lucide="arrow-left" class="w-4 h-4 inline mr-1"></i> Previous
+                </button>
+                <div class="flex-1"></div>
+                <button id="next-chapter-btn" class="admin-btn-secondary text-sm hidden">
+                    Next <i data-lucide="arrow-right" class="w-4 h-4 inline ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="assets/site.js"></script>
     <script>
@@ -163,9 +170,7 @@
                 contentEl.classList.remove('hidden');
 
                 renderChapterList();
-                if (allChapters.length > 0) {
-                    showChapter(0);
-                } else {
+                if (allChapters.length === 0) {
                     document.getElementById('chapter-empty').classList.remove('hidden');
                 }
                 if (window.lucide) lucide.createIcons();
@@ -180,11 +185,24 @@
         function renderChapterList() {
             const list = document.getElementById('chapter-list');
             list.innerHTML = allChapters.map((ch, i) => `
-                <div class="chapter-list-item" data-index="${i}" onclick="showChapter(${i})">
-                    <span class="chapter-number">${String(i + 1).padStart(2, '0')}</span>
-                    <span class="chapter-title">${escapeAttr(ch.title)}</span>
+                <div class="chapter-card" data-index="${i}" onclick="openChapter(${i})">
+                    <span class="chapter-card-number">${String(i + 1).padStart(2, '0')}</span>
+                    <span class="chapter-card-title">${escapeAttr(ch.title)}</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 chapter-card-arrow"></i>
                 </div>
             `).join('');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function openChapter(index) {
+            showChapter(index);
+            document.getElementById('chapter-reader').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeChapterReader() {
+            document.getElementById('chapter-reader').classList.add('hidden');
+            document.body.style.overflow = '';
         }
 
         function showChapter(index) {
@@ -192,29 +210,30 @@
             activeChapterIndex = index;
             const ch = allChapters[index];
 
-            document.getElementById('chapter-empty').classList.add('hidden');
-            document.getElementById('chapter-content').classList.remove('hidden');
             document.getElementById('chapter-eyebrow').textContent = `Chapter ${index + 1} of ${allChapters.length}`;
             document.getElementById('chapter-title').textContent = ch.title;
             document.getElementById('chapter-body').innerHTML = renderRichText(ch.body);
             highlightCodeBlocks(document.getElementById('chapter-body'));
-
-            document.querySelectorAll('.chapter-list-item').forEach(el => {
-                el.classList.toggle('is-active', parseInt(el.dataset.index) === index);
-            });
 
             const prevBtn = document.getElementById('prev-chapter-btn');
             const nextBtn = document.getElementById('next-chapter-btn');
             prevBtn.classList.toggle('hidden', index === 0);
             nextBtn.classList.toggle('hidden', index === allChapters.length - 1);
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('chapter-reader').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             loadCourse();
             document.getElementById('prev-chapter-btn').addEventListener('click', () => showChapter(activeChapterIndex - 1));
             document.getElementById('next-chapter-btn').addEventListener('click', () => showChapter(activeChapterIndex + 1));
+            document.getElementById('back-to-chapters-btn').addEventListener('click', closeChapterReader);
+            document.getElementById('close-reader-btn').addEventListener('click', closeChapterReader);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !document.getElementById('chapter-reader').classList.contains('hidden')) {
+                    closeChapterReader();
+                }
+            });
         });
     </script>
 </body>

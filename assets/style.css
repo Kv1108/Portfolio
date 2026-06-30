@@ -191,17 +191,33 @@ body {
     line-height: 1.85;
     margin-bottom: 1.4rem;
     font-size: 1.05rem;
+    text-align: justify;
+    text-justify: inter-word;
+}
+.prose-article img {
+    border-radius: 0.75rem;
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    border: 1px solid var(--glass-border);
 }
 .prose-article a {
     color: var(--accent);
     text-decoration: underline;
     text-decoration-color: rgba(0,255,102,0.3);
 }
-.prose-article img {
-    border-radius: 0.75rem;
-    margin: 2rem 0;
-    width: 100%;
-    border: 1px solid var(--glass-border);
+.prose-article blockquote {
+    border-left: none;
+    border-top: 1px solid rgba(0,255,102,0.25);
+    border-bottom: 1px solid rgba(0,255,102,0.25);
+    padding: 1.5rem 2rem;
+    color: #e4e4e7;
+    font-style: italic;
+    font-size: 1.15rem;
+    text-align: center;
+    margin: 2.5rem auto;
+    max-width: 90%;
 }
 .prose-article ul, .prose-article ol {
     color: var(--text-muted);
@@ -238,6 +254,26 @@ body {
     padding: 0;
     color: #e4e4e7;
 }
+/* Code blocks inserted via the rich text editor's "code" toolbar button */
+.prose-article pre.rte-code-block,
+.rte-editor pre.rte-code-block {
+    display: block;
+    background: #0d1117;
+    border: 1px solid var(--glass-border);
+    border-radius: 0.85rem;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+}
+.prose-article pre.rte-code-block code,
+.rte-editor pre.rte-code-block code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #e4e4e7;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
 
 /* ==========================================================================
    COURSES / CODE SNIPPET CHAPTERS (courses.html, course.html)
@@ -252,38 +288,44 @@ body {
     transform: translateY(-4px);
 }
 
-.chapter-list-item {
+/* Chapter selection cards (courses landing page, before reading mode opens) */
+.chapter-card {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem 1.25rem;
-    border-radius: 0.75rem;
-    border: 1px solid transparent;
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.02);
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
+    transition: all 0.25s;
 }
-.chapter-list-item:hover {
-    background: rgba(255,255,255,0.04);
+.chapter-card:hover {
+    border-color: rgba(0, 255, 102, 0.4);
+    background: rgba(0, 255, 102, 0.04);
+    transform: translateY(-2px);
 }
-.chapter-list-item.is-active {
-    background: rgba(0, 255, 102, 0.07);
-    border-color: rgba(0, 255, 102, 0.3);
-}
-.chapter-number {
+.chapter-card-number {
     font-family: monospace;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    width: 2rem;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
     flex-shrink: 0;
 }
-.chapter-list-item.is-active .chapter-number,
-.chapter-list-item.is-active .chapter-title {
-    color: var(--accent);
+.chapter-card-title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    flex: 1;
 }
-.chapter-title {
-    color: #d4d4d8;
-    font-weight: 500;
-    font-size: 0.95rem;
+.chapter-card-arrow {
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: transform 0.25s, color 0.25s;
+}
+.chapter-card:hover .chapter-card-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
 }
 
 /* Code block with copy button, used inside course chapters */
@@ -303,15 +345,21 @@ body {
     margin: 0;
     padding: 1.4rem 1.5rem;
     padding-top: 3rem;
-    overflow-x: auto;
+    overflow-x: hidden;
     font-size: 0.9rem;
     line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 .code-block-wrap pre code {
     color: #e4e4e7;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     background: transparent !important;
     padding: 0 !important;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 .code-block-wrap::before {
     content: "";
@@ -355,6 +403,100 @@ body {
    ADMIN PAGE (admin.html)
    ========================================================================== */
 
+/* Rich text toolbar + contenteditable body editor (blog admin) */
+.rte-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    background: #0d0d0d;
+    border: 1px solid var(--glass-border);
+    border-bottom: none;
+    border-radius: 0.6rem 0.6rem 0 0;
+    padding: 0.5rem;
+}
+.rte-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.4rem;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.rte-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.rte-btn-active { background: rgba(0,255,102,0.12); border-color: rgba(0,255,102,0.3); color: var(--accent); }
+.rte-divider {
+    width: 1px;
+    height: 1.4rem;
+    background: var(--glass-border);
+    margin: 0 0.35rem;
+}
+.rte-editor {
+    min-height: 320px;
+    max-height: 600px;
+    overflow-y: auto;
+    background: #0d0d0d;
+    border: 1px solid var(--glass-border);
+    border-radius: 0 0 0.6rem 0.6rem;
+    padding: 1rem 1.25rem;
+    color: #e4e4e7;
+    font-size: 0.95rem;
+    line-height: 1.75;
+}
+.rte-editor:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+.rte-editor:empty::before {
+    content: attr(data-placeholder);
+    color: #5a5a5a;
+}
+.rte-editor h2 { font-size: 1.4rem; font-weight: 700; color: #fff; margin: 1.25rem 0 0.5rem; }
+.rte-editor blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    color: #c4c4cc;
+    font-style: italic;
+    margin: 0.75rem 0;
+}
+.rte-editor a { color: var(--accent); text-decoration: underline; }
+.rte-editor img { max-width: 100%; border-radius: 0.5rem; margin: 0.75rem 0; }
+.rte-editor ul { list-style: disc; padding-left: 1.5rem; }
+.rte-code-block {
+    background: #0a0a0a;
+    border: 1px solid var(--glass-border);
+    border-radius: 0.5rem;
+    padding: 0.85rem 1rem;
+    margin: 0.75rem 0;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #e4e4e7;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+/* Star ratings — static display (books list, your review, reader comments) */
+.static-stars { font-size: 1rem; letter-spacing: 1px; }
+.static-stars .star-filled { color: var(--accent); }
+.static-stars .star-empty { color: rgba(255,255,255,0.15); }
+
+/* Star ratings — interactive input (visitor rating form) */
+.star-input-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: color 0.15s, transform 0.15s;
+    padding: 0;
+}
+.star-input-btn:hover { transform: scale(1.15); }
+.star-input-filled { color: var(--accent); }
 .admin-input,
 .admin-textarea,
 .admin-select {

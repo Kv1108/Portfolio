@@ -52,6 +52,7 @@
             <div class="flex gap-2 mb-8 border-b border-white/10">
                 <button class="admin-tab-btn px-4 py-3 text-sm font-bold uppercase tracking-wider text-white border-b-2 border-green-500" data-tab="blogs" onclick="switchTab('blogs')">Blogs</button>
                 <button class="admin-tab-btn px-4 py-3 text-sm font-bold uppercase tracking-wider text-gray-500 border-b-2 border-transparent" data-tab="courses" onclick="switchTab('courses')">Courses</button>
+                <button class="admin-tab-btn px-4 py-3 text-sm font-bold uppercase tracking-wider text-gray-500 border-b-2 border-transparent" data-tab="books" onclick="switchTab('books')">Books</button>
             </div>
 
             <!-- ===== BLOGS TAB ===== -->
@@ -92,11 +93,28 @@
                             <textarea id="blog-summary" rows="2" class="admin-textarea" style="font-family: 'Montserrat', sans-serif;" placeholder="One or two sentences that make someone want to click."></textarea>
                         </div>
                         <div>
-                            <label class="admin-label">
-                                Body
-                                <span class="text-gray-600 normal-case font-sans">— supports <code class="text-green-500">## heading</code>, <code class="text-green-500">**bold**</code>, <code class="text-green-500">`code`</code>, <code class="text-green-500">```language ... ```</code> code blocks, <code class="text-green-500">![alt](url)</code> images, <code class="text-green-500">- list</code> items, and links</span>
-                            </label>
-                            <textarea id="blog-body" rows="16" class="admin-textarea" placeholder="Write your post here using simple markdown..."></textarea>
+                            <label class="admin-label">Body</label>
+                            <div class="rte-toolbar">
+                                <button type="button" class="rte-btn" data-cmd="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" data-cmd="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" data-cmd="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                                <span class="rte-divider"></span>
+                                <button type="button" class="rte-btn" data-cmd="justifyLeft" title="Align left"><i data-lucide="align-left" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" data-cmd="justifyCenter" title="Align center"><i data-lucide="align-center" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" data-cmd="justifyFull" title="Justify"><i data-lucide="align-justify" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" data-cmd="justifyRight" title="Align right"><i data-lucide="align-right" class="w-4 h-4"></i></button>
+                                <span class="rte-divider"></span>
+                                <button type="button" class="rte-btn" data-block="h2" title="Heading"><i data-lucide="heading-2" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" data-block="blockquote" title="Quote"><i data-lucide="quote" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" data-cmd="insertUnorderedList" title="Bullet list"><i data-lucide="list" class="w-4 h-4"></i></button>
+                                <span class="rte-divider"></span>
+                                <button type="button" class="rte-btn" id="rte-link-btn" title="Insert link"><i data-lucide="link" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" id="rte-image-btn" title="Insert image"><i data-lucide="image" class="w-4 h-4"></i></button>
+                                <button type="button" class="rte-btn" id="rte-code-btn" title="Insert code block"><i data-lucide="code" class="w-4 h-4"></i></button>
+                                <span class="rte-divider"></span>
+                                <button type="button" class="rte-btn" data-cmd="removeFormat" title="Clear formatting"><i data-lucide="eraser" class="w-4 h-4"></i></button>
+                            </div>
+                            <div id="blog-body" class="rte-editor" contenteditable="true" data-placeholder="Write your post here. Select text and use the toolbar above to format it."></div>
                         </div>
 
                         <div class="flex items-center gap-3 pt-2">
@@ -229,6 +247,82 @@
                 </div>
             </div>
 
+            <!-- ===== BOOKS TAB ===== -->
+            <div id="tab-books" class="hidden">
+                <div id="book-list-view">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-white">Books</h2>
+                        <button onclick="newBook()" class="admin-btn-primary text-sm flex items-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i> New Book
+                        </button>
+                    </div>
+                    <div id="admin-book-list"></div>
+                    <p id="admin-book-empty" class="hidden text-gray-500 text-center py-10">No books yet. Click "New Book" to share your first review.</p>
+                </div>
+
+                <div id="book-edit-view" class="hidden">
+                    <button onclick="closeBookEditor()" class="inline-flex items-center text-gray-400 hover:text-white text-sm uppercase tracking-widest mb-6">
+                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Books
+                    </button>
+
+                    <input type="hidden" id="book-edit-id">
+
+                    <div class="space-y-5">
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="admin-label">Book title</label>
+                                <input id="book-title" class="admin-input" placeholder="e.g. The Alchemist" oninput="autoBookSlug()">
+                            </div>
+                            <div>
+                                <label class="admin-label">Author</label>
+                                <input id="book-author" class="admin-input" placeholder="e.g. Paulo Coelho">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="admin-label">URL slug (auto-generated, editable)</label>
+                            <input id="book-slug" class="admin-input" placeholder="the-alchemist">
+                        </div>
+                        <div>
+                            <label class="admin-label">Cover image URL <span class="text-gray-600">(optional — paste any image link)</span></label>
+                            <input id="book-cover" class="admin-input" placeholder="https://...">
+                        </div>
+                        <div>
+                            <label class="admin-label">Your rating</label>
+                            <div id="book-star-input" class="flex gap-1"></div>
+                        </div>
+                        <div>
+                            <label class="admin-label">
+                                Your review
+                                <span class="text-gray-600 normal-case font-sans">— supports <code class="text-green-500">## heading</code>, <code class="text-green-500">**bold**</code>, <code class="text-green-500">*italic*</code>, <code class="text-green-500">&gt; quote</code>, <code class="text-green-500">- list</code> items, and links</span>
+                            </label>
+                            <textarea id="book-review-text" rows="14" class="admin-textarea" placeholder="What did this book mean to you? Why does it stay with you?"></textarea>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-2">
+                            <label class="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                                <input type="checkbox" id="book-published" class="w-4 h-4 accent-green-500"> Published (visible on the live site)
+                            </label>
+                        </div>
+
+                        <div class="flex gap-3 pt-4 border-t border-white/10">
+                            <button onclick="saveBook()" id="book-save-btn" class="admin-btn-primary flex items-center gap-2">
+                                <i data-lucide="save" class="w-4 h-4"></i> Save Book
+                            </button>
+                            <button onclick="previewBook()" class="admin-btn-secondary text-sm">Preview</button>
+                            <button onclick="deleteBook()" id="book-delete-btn" class="admin-btn-secondary text-sm text-red-400 border-red-400/30 hover:border-red-400 ml-auto hidden">Delete Book</button>
+                        </div>
+                    </div>
+
+                    <!-- Reader comments moderation -->
+                    <div id="book-comments-section" class="hidden border-t border-white/10 mt-10 pt-8">
+                        <h3 class="text-lg font-bold text-white mb-1">Reader comments</h3>
+                        <p class="text-gray-500 text-sm mb-5">Visitors can post here without an account. Remove anything inappropriate, spam, or impersonating someone.</p>
+                        <div id="admin-comment-list" class="space-y-3"></div>
+                        <p id="admin-comment-empty" class="hidden text-gray-500 text-center py-6 text-sm">No comments yet on this book.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -243,7 +337,7 @@
            but presents as a single password to keep it simple for you.
            See SETUP.md for the one-time account creation step.
            ========================================================= */
-        const ADMIN_EMAIL = "krishnaviradiya1108@gmail.com"; // set in SETUP.md step
+        const ADMIN_EMAIL = "admin@your-domain.com"; // set in SETUP.md step
 
         async function attemptLogin() {
             const password = document.getElementById('login-password').value;
@@ -274,6 +368,7 @@
             if (window.lucide) lucide.createIcons();
             loadBlogList();
             loadCourseList();
+            loadBookList();
         }
 
         async function checkExistingSession() {
@@ -289,6 +384,7 @@
         function switchTab(tab) {
             document.getElementById('tab-blogs').classList.toggle('hidden', tab !== 'blogs');
             document.getElementById('tab-courses').classList.toggle('hidden', tab !== 'courses');
+            document.getElementById('tab-books').classList.toggle('hidden', tab !== 'books');
             document.querySelectorAll('.admin-tab-btn').forEach(btn => {
                 const active = btn.dataset.tab === tab;
                 btn.classList.toggle('text-white', active);
@@ -345,7 +441,7 @@
             document.getElementById('blog-slug').value = '';
             document.getElementById('blog-cover').value = '';
             document.getElementById('blog-summary').value = '';
-            document.getElementById('blog-body').value = '';
+            document.getElementById('blog-body').innerHTML = '';
             document.getElementById('blog-published').checked = false;
             document.getElementById('blog-delete-btn').classList.add('hidden');
             document.getElementById('blog-list-view').classList.add('hidden');
@@ -362,7 +458,7 @@
             document.getElementById('blog-slug').value = data.slug || '';
             document.getElementById('blog-cover').value = data.cover_image_url || '';
             document.getElementById('blog-summary').value = data.summary || '';
-            document.getElementById('blog-body').value = data.body || '';
+            document.getElementById('blog-body').innerHTML = data.body || '';
             document.getElementById('blog-published').checked = !!data.published;
             document.getElementById('blog-delete-btn').classList.remove('hidden');
             document.getElementById('blog-list-view').classList.add('hidden');
@@ -395,7 +491,7 @@
                 slug,
                 cover_image_url: document.getElementById('blog-cover').value.trim() || null,
                 summary: document.getElementById('blog-summary').value.trim(),
-                body: document.getElementById('blog-body').value,
+                body: document.getElementById('blog-body').innerHTML,
                 published: document.getElementById('blog-published').checked,
                 published_at: new Date().toISOString()
             };
@@ -672,7 +768,281 @@
             closeChapterEditor();
         }
 
-        document.addEventListener('DOMContentLoaded', checkExistingSession);
+        /* =========================================================
+           BOOKS
+           ========================================================= */
+        let selectedBookStars = 0;
+
+        function renderBookStarInput() {
+            const wrap = document.getElementById('book-star-input');
+            wrap.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('button');
+                star.type = 'button';
+                star.className = 'star-input-btn';
+                star.dataset.value = i;
+                star.innerHTML = '★';
+                star.addEventListener('click', () => {
+                    selectedBookStars = i;
+                    updateBookStarDisplay();
+                });
+                wrap.appendChild(star);
+            }
+            updateBookStarDisplay();
+        }
+
+        function updateBookStarDisplay() {
+            document.querySelectorAll('#book-star-input .star-input-btn').forEach(btn => {
+                btn.classList.toggle('star-input-filled', parseInt(btn.dataset.value) <= selectedBookStars);
+            });
+        }
+
+        async function loadBookList() {
+            const sb = getSupabase();
+            const listEl = document.getElementById('admin-book-list');
+            const emptyEl = document.getElementById('admin-book-empty');
+            const { data, error } = await sb.from('books').select('id, slug, title, author, published, published_at').order('published_at', { ascending: false });
+            if (error) { showToast('Could not load books.', 'error'); return; }
+
+            if (!data || data.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+            emptyEl.classList.add('hidden');
+            listEl.innerHTML = data.map(book => `
+                <div class="admin-row">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <span class="w-2 h-2 rounded-full ${book.published ? 'bg-green-500' : 'bg-gray-600'} flex-shrink-0"></span>
+                        <span class="text-white font-medium truncate">${escapeAttr(book.title)}</span>
+                        ${book.author ? `<span class="text-gray-500 text-xs truncate">by ${escapeAttr(book.author)}</span>` : ''}
+                    </div>
+                    <button onclick="editBook('${book.id}')" class="admin-btn-secondary text-xs flex-shrink-0">Edit</button>
+                </div>
+            `).join('');
+        }
+
+        function newBook() {
+            document.getElementById('book-edit-id').value = '';
+            document.getElementById('book-title').value = '';
+            document.getElementById('book-author').value = '';
+            document.getElementById('book-slug').value = '';
+            document.getElementById('book-cover').value = '';
+            document.getElementById('book-review-text').value = '';
+            document.getElementById('book-published').checked = false;
+            selectedBookStars = 0;
+            updateBookStarDisplay();
+            document.getElementById('book-delete-btn').classList.add('hidden');
+            document.getElementById('book-comments-section').classList.add('hidden');
+            document.getElementById('book-list-view').classList.add('hidden');
+            document.getElementById('book-edit-view').classList.remove('hidden');
+        }
+
+        async function editBook(id) {
+            const sb = getSupabase();
+            const { data, error } = await sb.from('books').select('*').eq('id', id).single();
+            if (error || !data) { showToast('Could not load book.', 'error'); return; }
+
+            document.getElementById('book-edit-id').value = data.id;
+            document.getElementById('book-title').value = data.title || '';
+            document.getElementById('book-author').value = data.author || '';
+            document.getElementById('book-slug').value = data.slug || '';
+            document.getElementById('book-cover').value = data.cover_image_url || '';
+            document.getElementById('book-review-text').value = data.my_review || '';
+            document.getElementById('book-published').checked = !!data.published;
+            selectedBookStars = data.my_rating || 0;
+            updateBookStarDisplay();
+            document.getElementById('book-delete-btn').classList.remove('hidden');
+            document.getElementById('book-comments-section').classList.remove('hidden');
+            document.getElementById('book-list-view').classList.add('hidden');
+            document.getElementById('book-edit-view').classList.remove('hidden');
+
+            loadBookComments(data.id);
+        }
+
+        function closeBookEditor() {
+            document.getElementById('book-edit-view').classList.add('hidden');
+            document.getElementById('book-list-view').classList.remove('hidden');
+            loadBookList();
+        }
+
+        function autoBookSlug() {
+            const slugField = document.getElementById('book-slug');
+            if (!document.getElementById('book-edit-id').value) {
+                slugField.value = slugify(document.getElementById('book-title').value);
+            }
+        }
+
+        async function saveBook() {
+            const sb = getSupabase();
+            const id = document.getElementById('book-edit-id').value;
+            const title = document.getElementById('book-title').value.trim();
+            const slug = slugify(document.getElementById('book-slug').value || title);
+
+            if (!title || !slug) { showToast('Title is required.', 'error'); return; }
+
+            const payload = {
+                title,
+                slug,
+                author: document.getElementById('book-author').value.trim() || null,
+                cover_image_url: document.getElementById('book-cover').value.trim() || null,
+                my_review: document.getElementById('book-review-text').value,
+                my_rating: selectedBookStars || null,
+                published: document.getElementById('book-published').checked,
+                published_at: new Date().toISOString()
+            };
+
+            const btn = document.getElementById('book-save-btn');
+            btn.disabled = true;
+
+            try {
+                let error;
+                if (id) {
+                    ({ error } = await sb.from('books').update(payload).eq('id', id));
+                } else {
+                    ({ error } = await sb.from('books').insert(payload));
+                }
+                if (error) throw error;
+                showToast('Book saved.', 'success');
+                closeBookEditor();
+            } catch (err) {
+                console.error(err);
+                showToast(err.message && err.message.includes('duplicate') ? 'That slug is already used by another book.' : 'Save failed.', 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function previewBook() {
+            const slug = document.getElementById('book-slug').value.trim();
+            if (!slug) { showToast('Add a slug first, then save, to preview.', 'error'); return; }
+            window.open(`book.html?slug=${encodeURIComponent(slug)}`, '_blank');
+        }
+
+        async function deleteBook() {
+            const id = document.getElementById('book-edit-id').value;
+            if (!id) return;
+            if (!confirm('Delete this book and all its reader comments permanently? This cannot be undone.')) return;
+            const sb = getSupabase();
+            const { error } = await sb.from('books').delete().eq('id', id);
+            if (error) { showToast('Delete failed.', 'error'); return; }
+            showToast('Book deleted.', 'success');
+            closeBookEditor();
+        }
+
+        async function loadBookComments(bookId) {
+            const sb = getSupabase();
+            const listEl = document.getElementById('admin-comment-list');
+            const emptyEl = document.getElementById('admin-comment-empty');
+            const { data, error } = await sb
+                .from('book_ratings')
+                .select('id, name, rating, comment, created_at')
+                .eq('book_id', bookId)
+                .order('created_at', { ascending: false });
+
+            if (error) { listEl.innerHTML = ''; return; }
+
+            if (!data || data.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+            emptyEl.classList.add('hidden');
+            listEl.innerHTML = data.map(r => `
+                <div class="admin-row items-start">
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-white font-medium text-sm">${escapeAttr(r.name)}</span>
+                            <span class="text-green-500 text-xs">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+                        </div>
+                        ${r.comment ? `<p class="text-gray-400 text-sm">${escapeAttr(r.comment)}</p>` : ''}
+                        <span class="text-gray-600 text-xs font-mono">${formatDate(r.created_at)}</span>
+                    </div>
+                    <button onclick="deleteBookComment('${r.id}', '${bookId}')" class="admin-btn-secondary text-xs text-red-400 border-red-400/30 hover:border-red-400 flex-shrink-0">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        async function deleteBookComment(commentId, bookId) {
+            if (!confirm('Remove this comment permanently?')) return;
+            const sb = getSupabase();
+            const { error } = await sb.from('book_ratings').delete().eq('id', commentId);
+            if (error) { showToast('Could not remove comment.', 'error'); return; }
+            showToast('Comment removed.', 'success');
+            loadBookComments(bookId);
+        }
+
+        /* =========================================================
+           RICH TEXT EDITOR (blog body)
+           Uses the browser's built-in execCommand for formatting.
+           Saved output is real HTML, rendered directly on blog-post.html.
+           ========================================================= */
+        function initRichTextEditor() {
+            const editor = document.getElementById('blog-body');
+            if (!editor) return;
+
+            document.querySelectorAll('.rte-btn[data-cmd]').forEach(btn => {
+                btn.addEventListener('mousedown', (e) => {
+                    e.preventDefault(); // keep focus/selection inside editor
+                    document.execCommand(btn.dataset.cmd, false, null);
+                    editor.focus();
+                    updateToolbarState();
+                });
+            });
+
+            document.querySelectorAll('.rte-btn[data-block]').forEach(btn => {
+                btn.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    const tag = btn.dataset.block;
+                    document.execCommand('formatBlock', false, tag === 'blockquote' ? 'blockquote' : tag);
+                    editor.focus();
+                    updateToolbarState();
+                });
+            });
+
+            document.getElementById('rte-link-btn').addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const url = prompt('Link URL:', 'https://');
+                if (url) document.execCommand('createLink', false, url);
+                editor.focus();
+            });
+
+            document.getElementById('rte-image-btn').addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const url = prompt('Image URL:', 'https://');
+                if (url) document.execCommand('insertImage', false, url);
+                editor.focus();
+            });
+
+            document.getElementById('rte-code-btn').addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const selection = window.getSelection();
+                const selectedText = selection.toString() || 'your code here';
+                document.execCommand('insertHTML', false,
+                    `<pre class="rte-code-block"><code>${selectedText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre><p><br></p>`
+                );
+                editor.focus();
+            });
+
+            editor.addEventListener('keyup', updateToolbarState);
+            editor.addEventListener('mouseup', updateToolbarState);
+
+            function updateToolbarState() {
+                document.querySelectorAll('.rte-btn[data-cmd]').forEach(btn => {
+                    try {
+                        const active = document.queryCommandState(btn.dataset.cmd);
+                        btn.classList.toggle('rte-btn-active', active);
+                    } catch (e) { /* some commands don't support state query */ }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkExistingSession();
+            initRichTextEditor();
+            renderBookStarInput();
+            if (window.lucide) lucide.createIcons();
+        });
     </script>
 </body>
 </html>

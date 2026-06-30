@@ -33,6 +33,7 @@
                 <a href="index.html#experience" data-page="home" class="hover:text-white transition-colors nav-link">Experience</a>
                 <a href="blogs.html" data-page="blogs" class="hover:text-white transition-colors nav-link">Blogs</a>
                 <a href="courses.html" data-page="courses" class="hover:text-white transition-colors nav-link">Courses</a>
+                <a href="books.html" data-page="books" class="hover:text-white transition-colors nav-link">Books</a>
                 <a href="index.html#contact" data-page="home" class="hover:text-white transition-colors nav-link">Contact</a>
             </div>
 
@@ -47,6 +48,7 @@
             <a href="index.html#experience" data-page="home" class="mobile-link">Experience</a>
             <a href="blogs.html" data-page="blogs" class="mobile-link">Blogs</a>
             <a href="courses.html" data-page="courses" class="mobile-link">Courses</a>
+            <a href="books.html" data-page="books" class="mobile-link">Books</a>
             <a href="index.html#contact" data-page="home" class="mobile-link">Contact</a>
         </div>
     </header>
@@ -114,7 +116,7 @@
                 document.getElementById('page-title').textContent = data.title + ' | Krishna Viradiya';
                 document.getElementById('post-date').textContent = formatDate(data.published_at);
                 document.getElementById('post-title').textContent = data.title;
-                document.getElementById('post-body').innerHTML = renderRichText(data.body);
+                document.getElementById('post-body').innerHTML = data.body || '';
                 highlightCodeBlocks(document.getElementById('post-body'));
 
                 if (data.cover_image_url) {
