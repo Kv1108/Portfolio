@@ -24,10 +24,38 @@
                 <i data-lucide="lock" class="w-5 h-5 text-green-500"></i>
                 <h1 class="text-xl font-bold text-white">Admin Access</h1>
             </div>
-            <label class="admin-label">Password</label>
-            <input id="login-password" type="password" class="admin-input mb-2" placeholder="••••••••" onkeydown="if(event.key==='Enter') attemptLogin()">
-            <p id="login-error" class="text-red-400 text-sm mb-4 hidden">Incorrect password.</p>
-            <button onclick="attemptLogin()" class="admin-btn-primary w-full mt-2">Unlock</button>
+
+            <!-- Normal login -->
+            <div id="login-form-view">
+                <label class="admin-label">Password</label>
+                <input id="login-password" type="password" class="admin-input mb-2" placeholder="••••••••" onkeydown="if(event.key==='Enter') attemptLogin()">
+                <p id="login-error" class="text-red-400 text-sm mb-1 hidden">Incorrect password.</p>
+                <button type="button" onclick="showForgotPasswordView()" class="text-xs text-gray-500 hover:text-green-400 transition-colors underline decoration-dotted">Forgot password?</button>
+                <button onclick="attemptLogin()" class="admin-btn-primary w-full mt-4">Unlock</button>
+            </div>
+
+            <!-- Forgot password -->
+            <div id="forgot-password-view" class="hidden">
+                <p class="text-gray-400 text-sm mb-4">We'll send a password reset link to <span class="text-white font-medium" id="forgot-password-email-display"></span>.</p>
+                <button onclick="sendPasswordResetEmail()" id="send-reset-btn" class="admin-btn-primary w-full flex items-center justify-center gap-2">
+                    <i data-lucide="mail" class="w-4 h-4"></i> Send Reset Link
+                </button>
+                <p id="forgot-password-status" class="text-sm mt-3 hidden"></p>
+                <button type="button" onclick="showLoginFormView()" class="text-xs text-gray-500 hover:text-white transition-colors mt-4 inline-flex items-center gap-1">
+                    <i data-lucide="arrow-left" class="w-3 h-3"></i> Back to login
+                </button>
+            </div>
+
+            <!-- Shown only when arriving from the reset-link email -->
+            <div id="set-new-password-view" class="hidden">
+                <p class="text-gray-400 text-sm mb-4">Choose a new password for your admin account.</p>
+                <label class="admin-label">New password</label>
+                <input id="new-password-input" type="password" class="admin-input mb-3" placeholder="At least 6 characters">
+                <label class="admin-label">Confirm new password</label>
+                <input id="confirm-password-input" type="password" class="admin-input mb-2" placeholder="Repeat it">
+                <p id="new-password-error" class="text-red-400 text-sm mb-3 hidden"></p>
+                <button onclick="setNewPassword()" id="set-password-btn" class="admin-btn-primary w-full">Update Password</button>
+            </div>
         </div>
     </div>
 
@@ -347,6 +375,10 @@
 
             const { data, error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
             if (error) {
+                // Show Supabase's actual reason (e.g. "Invalid login credentials",
+                // "Email not confirmed") instead of a generic message, so it's
+                // obvious whether this is a wrong password or something else.
+                errorEl.textContent = error.message || 'Incorrect password.';
                 errorEl.classList.remove('hidden');
                 return;
             }
@@ -360,6 +392,7 @@
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden');
             document.getElementById('login-password').value = '';
+            showLoginFormView();
         }
 
         function showDashboard() {
@@ -372,10 +405,101 @@
         }
 
         async function checkExistingSession() {
+            // If we arrived here via the password-reset email link, Supabase
+            // fires a PASSWORD_RECOVERY auth event — catch it and show the
+            // "set new password" screen instead of the normal login.
             const sb = getSupabase();
             if (!sb) return;
+
+            sb.auth.onAuthStateChange((event, session) => {
+                if (event === 'PASSWORD_RECOVERY') {
+                    showSetNewPasswordView();
+                }
+            });
+
             const { data } = await sb.auth.getSession();
-            if (data && data.session) showDashboard();
+            if (data && data.session && !window.location.hash.includes('type=recovery')) {
+                showDashboard();
+            }
+        }
+
+        /* ---- Forgot password flow ---- */
+        function showForgotPasswordView() {
+            document.getElementById('login-form-view').classList.add('hidden');
+            document.getElementById('forgot-password-view').classList.remove('hidden');
+            document.getElementById('set-new-password-view').classList.add('hidden');
+            document.getElementById('forgot-password-email-display').textContent = ADMIN_EMAIL;
+            document.getElementById('forgot-password-status').classList.add('hidden');
+        }
+
+        function showLoginFormView() {
+            document.getElementById('login-form-view').classList.remove('hidden');
+            document.getElementById('forgot-password-view').classList.add('hidden');
+            document.getElementById('set-new-password-view').classList.add('hidden');
+        }
+
+        function showSetNewPasswordView() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('login-form-view').classList.add('hidden');
+            document.getElementById('forgot-password-view').classList.add('hidden');
+            document.getElementById('set-new-password-view').classList.remove('hidden');
+        }
+
+        async function sendPasswordResetEmail() {
+            const sb = getSupabase();
+            const statusEl = document.getElementById('forgot-password-status');
+            const btn = document.getElementById('send-reset-btn');
+            if (!sb) { showToast('Backend not configured yet.', 'error'); return; }
+
+            btn.disabled = true;
+            const { error } = await sb.auth.resetPasswordForEmail(ADMIN_EMAIL, {
+                redirectTo: window.location.origin + window.location.pathname
+            });
+            btn.disabled = false;
+
+            statusEl.classList.remove('hidden');
+            if (error) {
+                statusEl.textContent = error.message || 'Could not send reset email. Try again in a minute.';
+                statusEl.className = 'text-sm mt-3 text-red-400';
+            } else {
+                statusEl.textContent = 'Reset link sent — check your inbox (and spam folder). It can take a minute to arrive.';
+                statusEl.className = 'text-sm mt-3 text-green-400';
+            }
+        }
+
+        async function setNewPassword() {
+            const sb = getSupabase();
+            const newPassword = document.getElementById('new-password-input').value;
+            const confirmPassword = document.getElementById('confirm-password-input').value;
+            const errorEl = document.getElementById('new-password-error');
+            errorEl.classList.add('hidden');
+
+            if (newPassword.length < 6) {
+                errorEl.textContent = 'Password must be at least 6 characters.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                errorEl.textContent = 'Passwords do not match.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            const btn = document.getElementById('set-password-btn');
+            btn.disabled = true;
+            const { error } = await sb.auth.updateUser({ password: newPassword });
+            btn.disabled = false;
+
+            if (error) {
+                errorEl.textContent = error.message || 'Could not update password. The reset link may have expired — request a new one.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            showToast('Password updated. You\'re now logged in.', 'success');
+            history.replaceState(null, '', window.location.pathname); // clean the recovery token from the URL
+            showDashboard();
         }
 
         /* =========================================================
